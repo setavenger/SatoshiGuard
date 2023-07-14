@@ -1,0 +1,588 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		95C67C312A6145820038E39F /* SatoshiGuardApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C67C302A6145820038E39F /* SatoshiGuardApp.swift */; };
+		95C67C332A6145820038E39F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C67C322A6145820038E39F /* ContentView.swift */; };
+		95C67C352A6145850038E39F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 95C67C342A6145850038E39F /* Assets.xcassets */; };
+		95C67C382A6145850038E39F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 95C67C372A6145850038E39F /* Preview Assets.xcassets */; };
+		95C67C422A6145860038E39F /* SatoshiGuardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C67C412A6145860038E39F /* SatoshiGuardTests.swift */; };
+		95C67C4C2A6145860038E39F /* SatoshiGuardUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C67C4B2A6145860038E39F /* SatoshiGuardUITests.swift */; };
+		95C67C4E2A6145860038E39F /* SatoshiGuardUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C67C4D2A6145860038E39F /* SatoshiGuardUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		95C67C3E2A6145860038E39F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 95C67C252A6145820038E39F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 95C67C2C2A6145820038E39F;
+			remoteInfo = SatoshiGuard;
+		};
+		95C67C482A6145860038E39F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 95C67C252A6145820038E39F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 95C67C2C2A6145820038E39F;
+			remoteInfo = SatoshiGuard;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		95C67C2D2A6145820038E39F /* SatoshiGuard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SatoshiGuard.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		95C67C302A6145820038E39F /* SatoshiGuardApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SatoshiGuardApp.swift; sourceTree = "<group>"; };
+		95C67C322A6145820038E39F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		95C67C342A6145850038E39F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		95C67C372A6145850038E39F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		95C67C3D2A6145860038E39F /* SatoshiGuardTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SatoshiGuardTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		95C67C412A6145860038E39F /* SatoshiGuardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SatoshiGuardTests.swift; sourceTree = "<group>"; };
+		95C67C472A6145860038E39F /* SatoshiGuardUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SatoshiGuardUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		95C67C4B2A6145860038E39F /* SatoshiGuardUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SatoshiGuardUITests.swift; sourceTree = "<group>"; };
+		95C67C4D2A6145860038E39F /* SatoshiGuardUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SatoshiGuardUITestsLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		95C67C2A2A6145820038E39F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		95C67C3A2A6145860038E39F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		95C67C442A6145860038E39F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		95C67C242A6145820038E39F = {
+			isa = PBXGroup;
+			children = (
+				95C67C2F2A6145820038E39F /* SatoshiGuard */,
+				95C67C402A6145860038E39F /* SatoshiGuardTests */,
+				95C67C4A2A6145860038E39F /* SatoshiGuardUITests */,
+				95C67C2E2A6145820038E39F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		95C67C2E2A6145820038E39F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				95C67C2D2A6145820038E39F /* SatoshiGuard.app */,
+				95C67C3D2A6145860038E39F /* SatoshiGuardTests.xctest */,
+				95C67C472A6145860038E39F /* SatoshiGuardUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		95C67C2F2A6145820038E39F /* SatoshiGuard */ = {
+			isa = PBXGroup;
+			children = (
+				95C67C302A6145820038E39F /* SatoshiGuardApp.swift */,
+				95C67C322A6145820038E39F /* ContentView.swift */,
+				95C67C342A6145850038E39F /* Assets.xcassets */,
+				95C67C362A6145850038E39F /* Preview Content */,
+			);
+			path = SatoshiGuard;
+			sourceTree = "<group>";
+		};
+		95C67C362A6145850038E39F /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				95C67C372A6145850038E39F /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		95C67C402A6145860038E39F /* SatoshiGuardTests */ = {
+			isa = PBXGroup;
+			children = (
+				95C67C412A6145860038E39F /* SatoshiGuardTests.swift */,
+			);
+			path = SatoshiGuardTests;
+			sourceTree = "<group>";
+		};
+		95C67C4A2A6145860038E39F /* SatoshiGuardUITests */ = {
+			isa = PBXGroup;
+			children = (
+				95C67C4B2A6145860038E39F /* SatoshiGuardUITests.swift */,
+				95C67C4D2A6145860038E39F /* SatoshiGuardUITestsLaunchTests.swift */,
+			);
+			path = SatoshiGuardUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		95C67C2C2A6145820038E39F /* SatoshiGuard */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 95C67C512A6145860038E39F /* Build configuration list for PBXNativeTarget "SatoshiGuard" */;
+			buildPhases = (
+				95C67C292A6145820038E39F /* Sources */,
+				95C67C2A2A6145820038E39F /* Frameworks */,
+				95C67C2B2A6145820038E39F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SatoshiGuard;
+			productName = SatoshiGuard;
+			productReference = 95C67C2D2A6145820038E39F /* SatoshiGuard.app */;
+			productType = "com.apple.product-type.application";
+		};
+		95C67C3C2A6145860038E39F /* SatoshiGuardTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 95C67C542A6145860038E39F /* Build configuration list for PBXNativeTarget "SatoshiGuardTests" */;
+			buildPhases = (
+				95C67C392A6145860038E39F /* Sources */,
+				95C67C3A2A6145860038E39F /* Frameworks */,
+				95C67C3B2A6145860038E39F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				95C67C3F2A6145860038E39F /* PBXTargetDependency */,
+			);
+			name = SatoshiGuardTests;
+			productName = SatoshiGuardTests;
+			productReference = 95C67C3D2A6145860038E39F /* SatoshiGuardTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		95C67C462A6145860038E39F /* SatoshiGuardUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 95C67C572A6145860038E39F /* Build configuration list for PBXNativeTarget "SatoshiGuardUITests" */;
+			buildPhases = (
+				95C67C432A6145860038E39F /* Sources */,
+				95C67C442A6145860038E39F /* Frameworks */,
+				95C67C452A6145860038E39F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				95C67C492A6145860038E39F /* PBXTargetDependency */,
+			);
+			name = SatoshiGuardUITests;
+			productName = SatoshiGuardUITests;
+			productReference = 95C67C472A6145860038E39F /* SatoshiGuardUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		95C67C252A6145820038E39F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1420;
+				LastUpgradeCheck = 1420;
+				TargetAttributes = {
+					95C67C2C2A6145820038E39F = {
+						CreatedOnToolsVersion = 14.2;
+					};
+					95C67C3C2A6145860038E39F = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = 95C67C2C2A6145820038E39F;
+					};
+					95C67C462A6145860038E39F = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = 95C67C2C2A6145820038E39F;
+					};
+				};
+			};
+			buildConfigurationList = 95C67C282A6145820038E39F /* Build configuration list for PBXProject "SatoshiGuard" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 95C67C242A6145820038E39F;
+			productRefGroup = 95C67C2E2A6145820038E39F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				95C67C2C2A6145820038E39F /* SatoshiGuard */,
+				95C67C3C2A6145860038E39F /* SatoshiGuardTests */,
+				95C67C462A6145860038E39F /* SatoshiGuardUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		95C67C2B2A6145820038E39F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				95C67C382A6145850038E39F /* Preview Assets.xcassets in Resources */,
+				95C67C352A6145850038E39F /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		95C67C3B2A6145860038E39F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		95C67C452A6145860038E39F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		95C67C292A6145820038E39F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				95C67C332A6145820038E39F /* ContentView.swift in Sources */,
+				95C67C312A6145820038E39F /* SatoshiGuardApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		95C67C392A6145860038E39F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				95C67C422A6145860038E39F /* SatoshiGuardTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		95C67C432A6145860038E39F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				95C67C4E2A6145860038E39F /* SatoshiGuardUITestsLaunchTests.swift in Sources */,
+				95C67C4C2A6145860038E39F /* SatoshiGuardUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		95C67C3F2A6145860038E39F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 95C67C2C2A6145820038E39F /* SatoshiGuard */;
+			targetProxy = 95C67C3E2A6145860038E39F /* PBXContainerItemProxy */;
+		};
+		95C67C492A6145860038E39F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 95C67C2C2A6145820038E39F /* SatoshiGuard */;
+			targetProxy = 95C67C482A6145860038E39F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		95C67C4F2A6145860038E39F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		95C67C502A6145860038E39F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		95C67C522A6145860038E39F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"SatoshiGuard/Preview Content\"";
+				DEVELOPMENT_TEAM = N4KJS45H4D;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.snblago.SatoshiGuard;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		95C67C532A6145860038E39F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"SatoshiGuard/Preview Content\"";
+				DEVELOPMENT_TEAM = N4KJS45H4D;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.snblago.SatoshiGuard;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		95C67C552A6145860038E39F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = N4KJS45H4D;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.snblago.SatoshiGuardTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SatoshiGuard.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SatoshiGuard";
+			};
+			name = Debug;
+		};
+		95C67C562A6145860038E39F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = N4KJS45H4D;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.snblago.SatoshiGuardTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SatoshiGuard.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SatoshiGuard";
+			};
+			name = Release;
+		};
+		95C67C582A6145860038E39F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = N4KJS45H4D;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.snblago.SatoshiGuardUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = SatoshiGuard;
+			};
+			name = Debug;
+		};
+		95C67C592A6145860038E39F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = N4KJS45H4D;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.snblago.SatoshiGuardUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = SatoshiGuard;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		95C67C282A6145820038E39F /* Build configuration list for PBXProject "SatoshiGuard" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				95C67C4F2A6145860038E39F /* Debug */,
+				95C67C502A6145860038E39F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		95C67C512A6145860038E39F /* Build configuration list for PBXNativeTarget "SatoshiGuard" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				95C67C522A6145860038E39F /* Debug */,
+				95C67C532A6145860038E39F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		95C67C542A6145860038E39F /* Build configuration list for PBXNativeTarget "SatoshiGuardTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				95C67C552A6145860038E39F /* Debug */,
+				95C67C562A6145860038E39F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		95C67C572A6145860038E39F /* Build configuration list for PBXNativeTarget "SatoshiGuardUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				95C67C582A6145860038E39F /* Debug */,
+				95C67C592A6145860038E39F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 95C67C252A6145820038E39F /* Project object */;
+}
