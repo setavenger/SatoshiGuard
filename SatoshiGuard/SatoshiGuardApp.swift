@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct SatoshiGuardApp: App {
+    @StateObject var walletManager = WalletManager();
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView().environmentObject(walletManager).preferredColorScheme(.dark)
         }
     }
 }
