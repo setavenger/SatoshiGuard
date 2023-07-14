@@ -47,7 +47,11 @@ struct InputView: View {
             
        
             Button(action: {
-                walletManager.buildMultiSigDescriptor(xpub1: xpub1, xpub2: xpub2, threshold: threshold)
+                walletManager.xpub1 = xpub1
+                walletManager.xpub2 = xpub2
+                walletManager.threshold = threshold
+
+                walletManager.buildMultiSigDescriptor()
                 self.showAlert = true
             }) {
                 Text("Confirm")
