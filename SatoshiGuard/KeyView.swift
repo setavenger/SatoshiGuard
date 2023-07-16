@@ -64,7 +64,7 @@ struct KeyView: View {
             }
             Spacer()
             NavigationLink(destination: RecoverView(walletManager: walletManager)) {
-                Text("Change Wallet")
+                Text("Set Private Key")
                     .font(.headline)
                     .padding()
                     .foregroundColor(.orange)

@@ -23,7 +23,9 @@ struct HomeView: View {
     var body: some View {
         VStack {
             HStack {
-                NavigationLink(destination: InputView(walletManager: walletManager)) {
+//                NavigationLink(destination: InputView(walletManager: walletManager)) {
+                NavigationLink(destination: DynamicTextFieldView(walletManager: walletManager)) {
+                
                     Image(systemName: "person.3.fill")
                         .resizable()
                         .scaledToFit()
@@ -64,7 +66,7 @@ struct HomeView: View {
             
             GeometryReader { geometry in
                 VStack{
-                    NavigationLink(destination: ReceiveView(wallet: self.walletManager)) {
+                    NavigationLink(destination: ReceiveView(wallet: walletManager)) {
                         Text("Receive")
                             .frame(width: geometry.size.width - 20, height: 50)
                             .font(.headline)

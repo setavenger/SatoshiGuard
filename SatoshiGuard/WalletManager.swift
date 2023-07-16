@@ -17,6 +17,8 @@ struct WalletDTO: Codable {
 
     var xpub1: String = ""
     var xpub2: String = ""
+    var xpubs: [String] = [""]
+    
     var threshold: UInt8 = 1
     var networkStr: String = "testnet"
 }
@@ -30,6 +32,8 @@ class WalletManager: ObservableObject,Identifiable {
     @Published var name: String = ""
     @Published var xpub1: String = ""
     @Published var xpub2: String = ""
+    @Published var xpubs: [String] = [""]
+    
     @Published var threshold: UInt8 = 1
     var networkStr: String = "testnet"
     var network: Network = Network.testnet
@@ -59,8 +63,11 @@ class WalletManager: ObservableObject,Identifiable {
         walletDTO.name = name
         walletDTO.xpub1 = xpub1
         walletDTO.xpub2 = xpub2
+        walletDTO.xpubs = xpubs
+        
         walletDTO.threshold = threshold
         walletDTO.networkStr = networkStr
+        
 //        print(walletDTO)
     }
     
@@ -80,8 +87,10 @@ class WalletManager: ObservableObject,Identifiable {
     }
 
     public func buildMultiSigDescriptor() {
-        self.multisigDescriptor = "wsh(sortedmulti(\(threshold),\(xprv)/84'/1'/0'/0/*,\(xpub1),\(xpub2)))"
-//        print(self.multisigDescriptor)
+//        print("XPRV")
+//        print(xprv)
+        self.multisigDescriptor = "wsh(sortedmulti(\(threshold),\(xprv)/84'/1'/0'/0/*,\(xpubs.joined(separator: ","))))"
+        print(self.multisigDescriptor)
         do {
             try storeWalletDTO()
         } catch {
@@ -124,9 +133,8 @@ class WalletManager: ObservableObject,Identifiable {
         return txid
     }
 
-    func updateMultiSigDetails(xpub1: String, xpub2: String, threshold: UInt8) {
-        self.xpub1 = xpub1
-        self.xpub2 = xpub2
+    func updateMultiSigDetails(xpubs: [String], threshold: UInt8) {
+        self.xpubs = xpubs
         self.threshold = threshold
 
         buildMultiSigDescriptor()
@@ -148,7 +156,7 @@ class WalletManager: ObservableObject,Identifiable {
             try computeXpub()
 
             print(self.xpub)
-            if xpub1 != "" && xpub2 != "" {
+            if xpubs != [""] {
                 self.buildMultiSigDescriptor()
                 try self.load()
             }
@@ -250,6 +258,7 @@ class WalletManager: ObservableObject,Identifiable {
         return jsonData
     }
 
+//    todo decide on where to call this function. Avoid double calling in builddescriptor and update xpubs
     func storeWalletDTO() throws {
         updateWalletDTO()
 
@@ -291,7 +300,16 @@ class WalletManager: ObservableObject,Identifiable {
         walletManager.xpub1 = walletDataDTO.xpub1
         walletManager.xpub2 = walletDataDTO.xpub2
         walletManager.threshold = walletDataDTO.threshold
-
+        
+//        in order to support legacy storing and pulling of data
+        if walletDataDTO.xpubs == [""] {
+            walletManager.xpubs = [walletDataDTO.xpub1, walletDataDTO.xpub2]
+        } else {
+            walletManager.xpubs = walletDataDTO.xpubs
+        }
+        
+        print(walletManager.xpubs)
+        
         switch walletDataDTO.networkStr {
         case "bitcoin":
             walletManager.setNetwork(network: Network.bitcoin)
@@ -307,6 +325,8 @@ class WalletManager: ObservableObject,Identifiable {
 
         try walletManager.loadXprvKey()
         walletManager.buildMultiSigDescriptor()
+        print(walletManager.multisigDescriptor)
+
         try walletManager.load()
         walletManager.sync()
 

@@ -39,7 +39,9 @@ struct OverviewView: View {
                     .frame(width: geometry.size.width, alignment: .center)
                 }
             }
-        }.navigationTitle("Wallets")
+        }
+        .background(LinearGradient(gradient: Gradient(colors: [Color.black, Color.gray]), startPoint: .top, endPoint: .bottom))
+        .navigationTitle("Wallets")
     }
 }
 
@@ -123,6 +125,8 @@ struct NewWalletView: View {
                       message: Text("Successfully added wallet"),
                       dismissButton: .default(Text("OK")))
             }
-        }.navigationTitle("New Wallet")
+        }
+        .background(LinearGradient(gradient: Gradient(colors: [Color.black, Color.gray]), startPoint: .top, endPoint: .bottom))
+        .navigationTitle("New Wallet")
     }
 }

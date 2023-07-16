@@ -60,7 +60,7 @@ struct ReceiveView: View {
                     .frame(width: 200, height: 200)
                 Spacer()
                 Text(splitAddress(address: address).0).textStyle(BasicTextStyle(white: true))
-                Text(splitAddress(address:  address).1).textStyle(BasicTextStyle(white: true))
+                Text(splitAddress(address: address).1).textStyle(BasicTextStyle(white: true))
                     .onTapGesture(count: 1) {
                         UIPasteboard.general.string = address
                     }
@@ -74,6 +74,7 @@ struct ReceiveView: View {
             Spacer()
             BasicButton(action: getAddress, text: "Generate new address", colorBg: .orange)
         }
+//        .background(LinearGradient(gradient: Gradient(colors: [Color.black, Color.gray]), startPoint: .top, endPoint: .bottom))
         .navigationTitle("Receive Address")
         .onAppear(perform: getAddress)
     }
