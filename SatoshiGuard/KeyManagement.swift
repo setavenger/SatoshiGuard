@@ -52,13 +52,19 @@ extension Data {
 enum MyError: Error {
     case retrievalFailed
     case storingFailed
-
+    case genericError
+    
     var localizedDescription: String {
         switch self {
         case .retrievalFailed:
             return "Retrieving didn't work"
         case .storingFailed:
             return "Storing didn't work"
+        case .genericError:
+            return "Unspecified error notice"
+        
         }
+        
+        
     }
 }

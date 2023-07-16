@@ -13,8 +13,12 @@ let context = CIContext()
 let filter = CIFilter.qrCodeGenerator()
 
 struct ReceiveView: View {
-    @EnvironmentObject var walletManager: WalletManager
+    @ObservedObject var walletManager: WalletManager
     @State private var address: String = ""
+    
+    init(wallet: WalletManager) {
+        self.walletManager = wallet
+    }
     
     func splitAddress(address: String) -> (String, String) {
         let length = address.count
@@ -24,6 +28,7 @@ struct ReceiveView: View {
     
     func getAddress() {
         do {
+//            todo change here
             let addressInfo = try walletManager.wallet!.getAddress(addressIndex: AddressIndex.new)
             address = addressInfo.address.asString()
         } catch {

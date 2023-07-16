@@ -10,7 +10,7 @@ import Combine
 
 
 struct SendView: View {
-    @EnvironmentObject var walletManager: WalletManager
+    @ObservedObject var walletManager: WalletManager
 
     @State var to: String = ""
     @State var amount: String = "0"
@@ -18,6 +18,10 @@ struct SendView: View {
     @State private var psbtSigned: String = ""
     @State private var txFeeString: String = "1"
 
+    init(wallet: WalletManager) {
+        self.walletManager = wallet
+    }
+    
     func handleScan(result: Result<ScanResult, ScanError>) {
         if case let .success(result) = result {
             to = result.string.removingPrefix("bitcoin:")
@@ -37,13 +41,13 @@ struct SendView: View {
                         TextField("Amount", text: $amount)
                             .modifier(BasicTextFieldStyle())
                             .keyboardType(.numberPad)
-                            .keyboardType(.decimalPad)
+//                            .keyboardType(.decimalPad)
                     }
                     Section(header: Text("Fees (sat/vB)").textStyle(BasicTextStyle(white: true))) {
                         TextField("Transaction Fee", text: $txFeeString)
                             .modifier(BasicTextFieldStyle())
                             .keyboardType(.numberPad)
-                            .keyboardType(.decimalPad)
+//                            .keyboardType(.decimalPad)
                     }
                 }
                 .onAppear {
@@ -91,14 +95,5 @@ struct BasicTextFieldStyle: ViewModifier {
             .disableAutocorrection(true)
             .textFieldStyle(.roundedBorder)
             .textInputAutocapitalization(.never)
-    }
-}
-
-struct SendView_Previews: PreviewProvider {
-    static func onSend(to: String, amount: UInt64) {
-        
-    }
-    static var previews: some View {
-        SendView()
     }
 }

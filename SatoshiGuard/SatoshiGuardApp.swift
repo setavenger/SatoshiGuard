@@ -9,11 +9,18 @@ import SwiftUI
 
 @main
 struct SatoshiGuardApp: App {
-    @StateObject var walletManager = WalletManager();
-
+    @StateObject var walletCoordinator = WalletCoordinator();
+    
+//    init () {
+//        do {
+//            try walletCoordinator.loadWallets()
+//        } catch {
+//            print("\(error)")
+//        }
+//    }
     var body: some Scene {
         WindowGroup {
-            ContentView().environmentObject(walletManager).preferredColorScheme(.dark)
+            ContentView(walletCoordinator: walletCoordinator).preferredColorScheme(.dark)
         }
     }
 }

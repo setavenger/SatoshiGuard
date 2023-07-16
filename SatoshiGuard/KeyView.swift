@@ -9,8 +9,13 @@ import Foundation
 import SwiftUI
 
 struct KeyView: View {
-    @EnvironmentObject var walletManager: WalletManager
+    @ObservedObject var walletManager: WalletManager
 
+
+    init(walletManager: WalletManager) {
+        self.walletManager = walletManager
+        print(walletManager)
+    }
     
     var body: some View {
         VStack{
@@ -58,7 +63,7 @@ struct KeyView: View {
                 Divider()
             }
             Spacer()
-            NavigationLink(destination: RecoverView()) {
+            NavigationLink(destination: RecoverView(walletManager: walletManager)) {
                 Text("Change Wallet")
                     .font(.headline)
                     .padding()

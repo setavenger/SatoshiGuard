@@ -10,55 +10,93 @@ import SwiftUI
 import BitcoinDevKit
 
 
-class WalletManager: ObservableObject {
+// Wallet Data Transfer Object
+struct WalletDTO: Codable {
+    var id: String = ""
+    var name: String = ""
+
+    var xpub1: String = ""
+    var xpub2: String = ""
+    var threshold: UInt8 = 1
+    var networkStr: String = "testnet"
+}
+
+class WalletManager: ObservableObject,Identifiable {
+
+//    var id: String = ""
+    var walletDTO: WalletDTO = WalletDTO()
     
-    @AppStorage("multisigDescriptor") var multisigDescriptor: String = ""
-    @AppStorage("xprvbool") var xprvBool: Bool = false
-    
-    @AppStorage("xpub1") var xpub1: String = ""
-    @AppStorage("xpub2") var xpub2: String = ""
-    @AppStorage("threshold") var threshold: Int = 1
-//    @AppStorage("network") var networkStr: String = "testnet"
-//
-//    var network: Network = .testnet
-    private(set) var wallet: Wallet?
+    @Published var id: UUID
+    @Published var name: String = ""
+    @Published var xpub1: String = ""
+    @Published var xpub2: String = ""
+    @Published var threshold: UInt8 = 1
+    var networkStr: String = "testnet"
+    var network: Network = Network.testnet
+
+    var multisigDescriptor: String = ""
+    @Published var xpub = ""
+    @Published var xprv = "" // might need to be published
+    var blockchain: Blockchain?
+
+    private(set) var wallet: Wallet? = nil
     private(set) var balance: UInt64 = 21_210_210
     @Published private(set) var balanceText: String = "Setup Keys"
     @Published private(set) var transactions: [BitcoinDevKit.TransactionDetails] = []
+    @Published private(set) var lastTransaction: String = "never"
+
     
-    var blockchain: Blockchain?
-    @Published var xprv = ""
-    var xpub = ""
+    init() {
+        id = UUID() // Creates a new UUID if one isn't supplied.
+    }
     
+    init?(uuid: UUID) {
+        id = uuid
+    }
+
+    func updateWalletDTO() {
+        walletDTO.id = id.uuidString
+        walletDTO.name = name
+        walletDTO.xpub1 = xpub1
+        walletDTO.xpub2 = xpub2
+        walletDTO.threshold = threshold
+        walletDTO.networkStr = networkStr
+//        print(walletDTO)
+    }
     
-//    init() {
-//        switch networkStr {
-//        case "bitcoin":
-//            network = Network.bitcoin
-//        case "testnet":
-//            network = Network.testnet
-//        case "regtest":
-//            network = Network.regtest
-//        case "signet":
-//            network = Network.signet
-//        default:
-//            network = Network.testnet
-//        }
-//    }
-    
-    public func buildMultiSigDescriptor(xpub1: String, xpub2: String, threshold: Int) {
+    func setNetwork(network: Network) {
+        self.network = network
+        
+        switch network {
+        case Network.bitcoin:
+            networkStr = "bitcoin"
+        case Network.testnet:
+            networkStr = "testnet"
+        case Network.regtest:
+            networkStr = "regtest"
+        case Network.signet:
+            networkStr = "signet"
+        }
+    }
+
+    public func buildMultiSigDescriptor() {
         self.multisigDescriptor = "wsh(sortedmulti(\(threshold),\(xprv)/84'/1'/0'/0/*,\(xpub1),\(xpub2)))"
 //        print(self.multisigDescriptor)
+        do {
+            try storeWalletDTO()
+        } catch {
+            print("\(error)")
+        }
     }
-    
+
     public func SignPSBT(psbtString: String) throws -> PartiallySignedTransaction {
-        
-            let psbt = try PartiallySignedTransaction(psbtBase64: psbtString)
-            let _ = try self.wallet!.sign(psbt: psbt, signOptions: nil)
-            
-            return psbt
+
+        let psbt = try PartiallySignedTransaction(psbtBase64: psbtString)
+        let _ = try self.wallet!.sign(psbt: psbt, signOptions: nil)
+
+        return psbt
     }
-    
+
     func createTransaction(recipient: String, amount: UInt64, txFee: Double) throws -> PartiallySignedTransaction {
         do {
             let address = try Address(address: recipient)
@@ -70,43 +108,55 @@ class WalletManager: ObservableObject {
             print(txBuilder.self)
             let details = try txBuilder.finish(wallet: wallet!)
             let _ = try wallet!.sign(psbt: details.psbt, signOptions: nil)
-            
+
             return details.psbt
         } catch let error {
             print(error)
             throw error
         }
     }
-    
-    func Broadcast(psbt: PartiallySignedTransaction) throws-> String {
+
+    func Broadcast(psbt: PartiallySignedTransaction) throws -> String {
         let tx = psbt.extractTx()
         try blockchain!.broadcast(transaction: tx)
         let txid = psbt.txid()
         print(txid)
         return txid
     }
-    
+
+    func updateMultiSigDetails(xpub1: String, xpub2: String, threshold: UInt8) {
+        self.xpub1 = xpub1
+        self.xpub2 = xpub2
+        self.threshold = threshold
+
+        buildMultiSigDescriptor()
+        do {
+            try storeWalletDTO()
+        } catch {
+            print("\(error)")
+        }
+    }
+
     public func LoadWords(words: String) throws -> Void {
         do {
             let mnemonic = try Mnemonic.fromString(mnemonic: words)
-            let descriptorNew = DescriptorSecretKey(network: Network.testnet, mnemonic: mnemonic, password: "")
-            
+            let descriptorNew = DescriptorSecretKey(network: self.network, mnemonic: mnemonic, password: "")
+
             self.xprv = descriptorNew.asString().replacingOccurrences(of: "/*", with: "")
-            xprvBool = true
-            
+
             try self.storeXprvKey(xprvKeyData: self.xprv)
             try computeXpub()
-            
+
             print(self.xpub)
             if xpub1 != "" && xpub2 != "" {
-                self.buildMultiSigDescriptor(xpub1: xpub1, xpub2: xpub2, threshold: threshold)
+                self.buildMultiSigDescriptor()
                 try self.load()
             }
         } catch {
             print("\(error)")
         }
     }
-    
+
     func load() throws {
         if multisigDescriptor == "" {
 //            throw Error("no multi sig descriptor built yet")
@@ -116,18 +166,18 @@ class WalletManager: ObservableObject {
 
         do {
             try self.loadXprvKey()
-
-            let electrum = ElectrumConfig(url: "ssl://electrum.blockstream.info:60002", socks5: nil, retry: 5, timeout: nil, stopGap: 10, validateDomain: true)
+            let electrumURL = network == .bitcoin ? "ssl://electrum.blockstream.info:50002" : "ssl://electrum.blockstream.info:60002"
+            let electrum = ElectrumConfig(url: electrumURL, socks5: nil, retry: 5, timeout: nil, stopGap: 10, validateDomain: true)
             let blockchainConfig = BlockchainConfig.electrum(config: electrum)
             self.blockchain = try Blockchain(config: blockchainConfig)
 
-            self.wallet = try Wallet(descriptor: Descriptor.init(descriptor: multisigDescriptor, network: Network.testnet), changeDescriptor: nil, network: Network.testnet, databaseConfig: db)
+            self.wallet = try Wallet(descriptor: Descriptor.init(descriptor: multisigDescriptor, network: self.network), changeDescriptor: nil, network: self.network, databaseConfig: db)
         } catch {
             print("\(error)")
             throw error
         }
     }
-    
+
     func sync() {
         if multisigDescriptor == "" {
 //            throw Error("no multi sig descriptor built yet")
@@ -139,7 +189,6 @@ class WalletManager: ObservableObject {
 
         DispatchQueue.global().async {
             print("syncing started")
-
             do {
                 // TODO use this progress update to show "syncing"
                 try self.wallet!.sync(blockchain: self.blockchain!, progress: nil)
@@ -157,10 +206,11 @@ class WalletManager: ObservableObject {
                     } else {
                         self.balanceText = "error"
                     }
-                    
+
                     self.transactions = wallet_transactions.sorted().reversed()
+                    self.computeLastTransaction()
                 }
-                
+
             } catch let error {
                 print(error)
                 DispatchQueue.main.async {
@@ -169,47 +219,204 @@ class WalletManager: ObservableObject {
             }
         }
     }
-    
+
     func storeXprvKey(xprvKeyData: String) throws {
         // todo: introduce proper key management to store and get several keys
         //  might also want to store descriptor for easier handling of completely different wallets
-        let status = saveToKeyChain(key: "com.snblago.BTCMulti.xprv", data: xprvKeyData.data(using: .utf8)!)
-        guard status == errSecSuccess else { throw MyError.storingFailed }
+        let status = saveToKeyChain(key: "com.snblago.SatoshiGuard.\(id)", data: xprvKeyData.data(using: .utf8)!)
+        guard status == errSecSuccess else {
+            throw MyError.storingFailed
+        }
     }
-    
+
     func loadXprvKey() throws {
         // todo: introduce proper key management to store and get several keys
-        let result = loadFromKeyChain(key: "com.snblago.BTCMulti.xprv")
+        let result = loadFromKeyChain(key: "com.snblago.SatoshiGuard.\(id)")
         if result == nil {
             return
         }
-        self.xprv = String(data: result!, encoding: .utf8)!
+        xprv = String(data: result!, encoding: .utf8)!
         try computeXpub()
     }
-    
+
     func computeXpub() throws {
         let descriptor = try DescriptorSecretKey.fromString(secretKey: "\(xprv)/*")
-        self.xpub = try descriptor.derive(path: DerivationPath(path: "m/84'/1'/0'/0")).asPublic().asString()
+        xpub = try descriptor.derive(path: DerivationPath(path: "m/84'/1'/0'/0")).asPublic().asString()
+    }
+
+    func serializeWallet() throws -> Data {
+        let encoder = JSONEncoder()
+        let jsonData = try encoder.encode(walletDTO)
+        return jsonData
+    }
+
+    func storeWalletDTO() throws {
+        updateWalletDTO()
+
+        let encoder = JSONEncoder()
+        if let jsonData = try? encoder.encode(walletDTO) {
+//            print(walletDTO)
+//            print(jsonData)
+            UserDefaults.standard.set(jsonData, forKey: "\(id)")
+            print("stored data to user defaults")
+        } else {
+            throw MyError.storingFailed
+        }
+    }
+
+    public static func loadWalletById(id: String) throws -> WalletManager? {
+        do {
+            let data = UserDefaults.standard.data(forKey: id)
+            if data == nil {
+                return nil
+            }
+            // Convert Data back to an array of MyType
+            //                let decoder = JSONDecoder()
+//                let loadedWalletDTO = try decoder.decode(WalletDTO.self, from: data)
+            return try loadWalletFromWalletDTO(walletDTO: data!)
+        } catch {
+            print("Error decoding Data to array: \(error)")
+            throw MyError.genericError
+        }
+        
+    }
+
+    public static func loadWalletFromWalletDTO(walletDTO: Data) throws -> WalletManager {
+        let decoder = JSONDecoder()
+        print(walletDTO)
+        let walletDataDTO = try decoder.decode(WalletDTO.self, from: walletDTO)
+        let walletManager = WalletManager()
+        walletManager.id = UUID(uuidString: walletDataDTO.id)!
+        walletManager.name = walletDataDTO.name
+        walletManager.xpub1 = walletDataDTO.xpub1
+        walletManager.xpub2 = walletDataDTO.xpub2
+        walletManager.threshold = walletDataDTO.threshold
+
+        switch walletDataDTO.networkStr {
+        case "bitcoin":
+            walletManager.setNetwork(network: Network.bitcoin)
+        case "testnet":
+            walletManager.setNetwork(network: Network.testnet)
+        case "regtest":
+            walletManager.setNetwork(network: Network.regtest)
+        case "signet":
+            walletManager.setNetwork(network: Network.signet)
+        default:
+            walletManager.setNetwork(network: Network.testnet)
+        }
+
+        try walletManager.loadXprvKey()
+        walletManager.buildMultiSigDescriptor()
+        try walletManager.load()
+        walletManager.sync()
+
+        return walletManager
     }
     
+    public func computeLastTransaction() {
+        if let lastElement = transactions.first {
+            if lastElement.confirmationTime == nil {
+                lastTransaction = "unconfirmed"
+            } else {
+                lastTransaction = Date(timeIntervalSince1970: TimeInterval(lastElement.confirmationTime!.timestamp)).getFormattedDate(format: "yyyy-MM-dd HH:mm:ss")
+            }
+        }
+        return
+    }
 }
 
-extension TransactionDetails: Comparable {
-    public static func < (lhs: TransactionDetails, rhs: TransactionDetails) -> Bool {
+class WalletCoordinator: ObservableObject {
+    @AppStorage("walletids") var walletIdsData: Data?
+//    var walletIdsStr: [String]
+    @Published var wallets: [WalletManager] = []
+
+    lazy var walletIdsStr: [String] = {
+        do {
+            print(walletIdsData)
+            if let walletData = walletIdsData {
+                return try JSONDecoder().decode([String].self, from: walletData)
+            }
+        } catch {
+            print("Error decoding walletIdsData: \(error)")
+        }
+        return [String]()
+    }()
+    
+    deinit {
+        do {
+            let data = try JSONEncoder().encode(walletIdsStr)
+            walletIdsData = data
+        } catch {
+            print("\(error)")
+        }
+    }
+
+
+    func loadWallets() throws {
+//        print(walletIdsStr)
+        for walletId in walletIdsStr {
+            do {
+                let wallet = try WalletManager.loadWalletById(id: walletId)
+                if wallet == nil {
+                    print("nothing found")
+                    continue
+                }
+                wallets.append(wallet!)
+            } catch {
+                print("\(error)")
+                continue
+            }
+            
+        }
+    }
+
+    func createNewWallet(name: String, network: Network) throws -> WalletManager {
+        let newWallet = WalletManager()
+        appendIfNotContains(value: newWallet.id.uuidString)  //append before so lazy var is loaded before adding to list of wallets.
+        newWallet.name = name
+        newWallet.setNetwork(network: network)
         
+        wallets.append(newWallet)
+        objectWillChange.send()
+        print("New wallet created and added with id: \(newWallet.id.uuidString)") // Debug print
+        let data = try JSONEncoder().encode(walletIdsStr)
+        walletIdsData = data
+        return newWallet
+    }
+    
+    
+    func appendIfNotContains(value: String) {
+        if !walletIdsStr.contains(value) {
+            walletIdsStr.append(value)
+        }
+        do {
+            let data = try JSONEncoder().encode(walletIdsStr)
+            walletIdsData = data
+        } catch {
+            print("\(error)")
+        }
+        
+    }
+
+}
+
+
+extension TransactionDetails: Comparable {
+    public static func <(lhs: TransactionDetails, rhs: TransactionDetails) -> Bool {
+
         let lhs_timestamp: UInt64 = lhs.confirmationTime?.timestamp ?? UInt64.max;
         let rhs_timestamp: UInt64 = rhs.confirmationTime?.timestamp ?? UInt64.max;
-        
+
         return lhs_timestamp < rhs_timestamp
     }
 }
 
 extension TransactionDetails: Equatable {
-    public static func == (lhs: TransactionDetails, rhs: TransactionDetails) -> Bool {
-        
+    public static func ==(lhs: TransactionDetails, rhs: TransactionDetails) -> Bool {
+
         let lhs_timestamp: UInt64 = lhs.confirmationTime?.timestamp ?? UInt64.max;
         let rhs_timestamp: UInt64 = rhs.confirmationTime?.timestamp ?? UInt64.max;
-        
+
         return lhs_timestamp == rhs_timestamp
     }
 }
