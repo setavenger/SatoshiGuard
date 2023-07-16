@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		957911262A6273DF003AB79B /* WalletHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 957911252A6273DF003AB79B /* WalletHomeView.swift */; };
 		95C67C312A6145820038E39F /* SatoshiGuardApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C67C302A6145820038E39F /* SatoshiGuardApp.swift */; };
 		95C67C332A6145820038E39F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C67C322A6145820038E39F /* ContentView.swift */; };
 		95C67C352A6145850038E39F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 95C67C342A6145850038E39F /* Assets.xcassets */; };
@@ -28,6 +29,7 @@
 		95C67C722A614FA10038E39F /* BitcoinDevKit in Frameworks */ = {isa = PBXBuildFile; productRef = 95C67C712A614FA10038E39F /* BitcoinDevKit */; };
 		95C67C752A6150770038E39F /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 95C67C742A6150770038E39F /* CodeScanner */; };
 		95C67C782A61A9730038E39F /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 95C67C772A61A9730038E39F /* .gitignore */; };
+		95C67C7A2A61ECF20038E39F /* OverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C67C792A61ECF20038E39F /* OverviewView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +50,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		957911252A6273DF003AB79B /* WalletHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletHomeView.swift; sourceTree = "<group>"; };
 		95C67C2D2A6145820038E39F /* SatoshiGuard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SatoshiGuard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		95C67C302A6145820038E39F /* SatoshiGuardApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SatoshiGuardApp.swift; sourceTree = "<group>"; };
 		95C67C322A6145820038E39F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -71,6 +74,7 @@
 		95C67C672A614ED50038E39F /* WalletManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletManager.swift; sourceTree = "<group>"; };
 		95C67C762A615AE50038E39F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		95C67C772A61A9730038E39F /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		95C67C792A61ECF20038E39F /* OverviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +144,8 @@
 				95C67C322A6145820038E39F /* ContentView.swift */,
 				95C67C342A6145850038E39F /* Assets.xcassets */,
 				95C67C362A6145850038E39F /* Preview Content */,
+				95C67C792A61ECF20038E39F /* OverviewView.swift */,
+				957911252A6273DF003AB79B /* WalletHomeView.swift */,
 			);
 			path = SatoshiGuard;
 			sourceTree = "<group>";
@@ -315,12 +321,14 @@
 				95C67C5D2A614EC80038E39F /* TxsView.swift in Sources */,
 				95C67C332A6145820038E39F /* ContentView.swift in Sources */,
 				95C67C5F2A614EC80038E39F /* ReceiveView.swift in Sources */,
+				957911262A6273DF003AB79B /* WalletHomeView.swift in Sources */,
 				95C67C682A614ED50038E39F /* Startview.swift in Sources */,
 				95C67C6A2A614ED50038E39F /* SignView.swift in Sources */,
 				95C67C5E2A614EC80038E39F /* SingleTxView.swift in Sources */,
 				95C67C6C2A614ED50038E39F /* SendView.swift in Sources */,
 				95C67C6E2A614ED50038E39F /* Extras.swift in Sources */,
 				95C67C312A6145820038E39F /* SatoshiGuardApp.swift in Sources */,
+				95C67C7A2A61ECF20038E39F /* OverviewView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

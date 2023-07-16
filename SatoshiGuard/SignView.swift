@@ -10,7 +10,7 @@ import SwiftUI
 
 struct SignView: View {
 
-    @EnvironmentObject var walletManager: WalletManager
+    @ObservedObject var walletManager: WalletManager
     @State private var psbtString: String = ""
     @State private var showErrorAlert = false
     @State private var showSuccessAlert = false
@@ -20,6 +20,10 @@ struct SignView: View {
     
     @State private var successTXID: String = ""
     
+    
+    init(wallet: WalletManager) {
+        walletManager = wallet
+    }
     
     var body: some View {
         GeometryReader{ geometry in
@@ -110,18 +114,11 @@ struct SignView: View {
                       dismissButton: .default(Text("OK")))
             }
         }
-        
         .background(LinearGradient(gradient: Gradient(colors: [Color.black, Color.gray]), startPoint: .top, endPoint: .bottom))
         .navigationTitle("Sign and Broadcast")
         .onTapGesture {
             self.endTextEditing()
         }
-    }
-}
-
-struct Sign_Previews: PreviewProvider {
-    static var previews: some View {
-        SignView()
     }
 }
 

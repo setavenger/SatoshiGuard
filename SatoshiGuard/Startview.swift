@@ -10,9 +10,13 @@ import SwiftUI
 import BitcoinDevKit
 
 struct RecoverView: View {
-    @EnvironmentObject var walletManager: WalletManager
+    @ObservedObject var walletManager: WalletManager
     @State private var inputText: String = ""
 
+    init(walletManager: WalletManager) {
+        self.walletManager = walletManager
+    }
+    
     var body: some View {
         VStack {
             Spacer()

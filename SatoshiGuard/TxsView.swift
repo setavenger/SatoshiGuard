@@ -18,7 +18,11 @@ extension Date {
 
 struct TxsView: View {
 
-    @EnvironmentObject var walletManager: WalletManager
+    @ObservedObject var walletManager: WalletManager
+    
+    init(walletManager: WalletManager) {
+        self.walletManager = walletManager
+    }
     
     var body: some View {
         VStack {
