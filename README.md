@@ -1,6 +1,9 @@
 
 # Satoshi Guard
-This is a work in progress iOS app to create and manage Bitcoin mulitsignature wallets. The app was created using the Bitcoin Development Kit (BDK) and was heavily inspired by the [BDKSwiftSample](https://github.com/futurepaul/BdkSwiftSample) app.
+*Important: Only put play money into this wallet as it is still under very active development and the software has not been audited*
+
+Satoshi Guard is an iOS app to create and manage Bitcoin mulitsignature wallets. The app was created using the [Bitcoin Development Kit (BDK)](https://bitcoindevkit.org/) and was heavily inspired by the [BDKSwiftSample](https://github.com/futurepaul/BdkSwiftSample) app. The app already offers the core of features. It is possible to send and receive funds only with the app. Furthermore it is possible to setup a completly new wallet from scratch. The app supports both testnet and the Bitcoin mainnet. 
+
 
 ### Technical Details
 Currently a multisignature wallet is created from three keys so an m-of-3 wallet is created in the app. In the future it will be possible to create a multisignature wallet with any number of keys. 
@@ -18,3 +21,4 @@ Private keys are created from a 12 or 24 word mnemonic seed. The extended public
 
 ## Caveats
 Currently the balance display is not optimal. The change from a sending transaction is counted as untrusted and is therefor not counted into the balance. So if a wallet only has one utxo and sends a transaction the balance will be temporarily displayed as zero. The reason is that the one utxo that the wallet held is spent and the change is not yet reconized as settled. A better handling of this situation is on the todo list. 
+
