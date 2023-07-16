@@ -12,6 +12,8 @@ Private keys are created from a 12 or 24 word mnemonic seed. The extended public
 - [x] Enable flexible number of m-of-n multisig wallets
 - [ ] Better handling of change utxos in balance
 - [ ] Fix thread blocking syncs when switching to receive view to fast after opening home view
+- [ ] Improve error handling
+- [ ] Write tests
 
 
 ## Caveats
