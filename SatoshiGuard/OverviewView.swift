@@ -103,7 +103,7 @@ struct NewWalletView: View {
                     do {
                         _ = try walletCoordinator.createNewWallet(name: newWalletName, network: network)
                         showSuccessAlert = true
-                        print(walletCoordinator.wallets.count)
+//                        print(walletCoordinator.wallets.count)
                     } catch {
 //                         todo show alert
                         print("\(error)")

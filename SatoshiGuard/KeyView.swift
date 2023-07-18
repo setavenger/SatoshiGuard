@@ -14,7 +14,7 @@ struct KeyView: View {
 
     init(walletManager: WalletManager) {
         self.walletManager = walletManager
-        print(walletManager)
+//        print(walletManager)
     }
     
     var body: some View {
@@ -73,6 +73,7 @@ struct KeyView: View {
             }
             Spacer()
         }
+        .navigationTitle("Keys")
         .background(LinearGradient(gradient: Gradient(colors: [Color.black, Color.gray]), startPoint: .top, endPoint: .bottom))
     }
 }

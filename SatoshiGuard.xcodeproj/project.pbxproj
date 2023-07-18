@@ -19,7 +19,7 @@
 		95C67C5D2A614EC80038E39F /* TxsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C67C5A2A614EC80038E39F /* TxsView.swift */; };
 		95C67C5E2A614EC80038E39F /* SingleTxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C67C5B2A614EC80038E39F /* SingleTxView.swift */; };
 		95C67C5F2A614EC80038E39F /* ReceiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C67C5C2A614EC80038E39F /* ReceiveView.swift */; };
-		95C67C682A614ED50038E39F /* Startview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C67C602A614ED50038E39F /* Startview.swift */; };
+		95C67C682A614ED50038E39F /* RecoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C67C602A614ED50038E39F /* RecoverView.swift */; };
 		95C67C692A614ED50038E39F /* KeyManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C67C612A614ED50038E39F /* KeyManagement.swift */; };
 		95C67C6A2A614ED50038E39F /* SignView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C67C622A614ED50038E39F /* SignView.swift */; };
 		95C67C6B2A614ED50038E39F /* XpubInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C67C632A614ED50038E39F /* XpubInputView.swift */; };
@@ -66,7 +66,7 @@
 		95C67C5A2A614EC80038E39F /* TxsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TxsView.swift; sourceTree = "<group>"; };
 		95C67C5B2A614EC80038E39F /* SingleTxView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleTxView.swift; sourceTree = "<group>"; };
 		95C67C5C2A614EC80038E39F /* ReceiveView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiveView.swift; sourceTree = "<group>"; };
-		95C67C602A614ED50038E39F /* Startview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Startview.swift; sourceTree = "<group>"; };
+		95C67C602A614ED50038E39F /* RecoverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecoverView.swift; sourceTree = "<group>"; };
 		95C67C612A614ED50038E39F /* KeyManagement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyManagement.swift; sourceTree = "<group>"; };
 		95C67C622A614ED50038E39F /* SignView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignView.swift; sourceTree = "<group>"; };
 		95C67C632A614ED50038E39F /* XpubInputView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XpubInputView.swift; sourceTree = "<group>"; };
@@ -137,7 +137,7 @@
 				95C67C652A614ED50038E39F /* KeyView.swift */,
 				95C67C642A614ED50038E39F /* SendView.swift */,
 				95C67C622A614ED50038E39F /* SignView.swift */,
-				95C67C602A614ED50038E39F /* Startview.swift */,
+				95C67C602A614ED50038E39F /* RecoverView.swift */,
 				95C67C672A614ED50038E39F /* WalletManager.swift */,
 				95C67C632A614ED50038E39F /* XpubInputView.swift */,
 				95C67C5C2A614EC80038E39F /* ReceiveView.swift */,
@@ -326,7 +326,7 @@
 				95C67C332A6145820038E39F /* ContentView.swift in Sources */,
 				95C67C5F2A614EC80038E39F /* ReceiveView.swift in Sources */,
 				957911262A6273DF003AB79B /* WalletHomeView.swift in Sources */,
-				95C67C682A614ED50038E39F /* Startview.swift in Sources */,
+				95C67C682A614ED50038E39F /* RecoverView.swift in Sources */,
 				95C67C6A2A614ED50038E39F /* SignView.swift in Sources */,
 				95C67C5E2A614EC80038E39F /* SingleTxView.swift in Sources */,
 				95C67C6C2A614ED50038E39F /* SendView.swift in Sources */,
@@ -489,7 +489,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"SatoshiGuard/Preview Content\"";
 				DEVELOPMENT_TEAM = N4KJS45H4D;
 				ENABLE_PREVIEWS = YES;
@@ -508,7 +508,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.2.1;
+				MARKETING_VERSION = 0.2.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.snblago.SatoshiGuard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -523,7 +523,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"SatoshiGuard/Preview Content\"";
 				DEVELOPMENT_TEAM = N4KJS45H4D;
 				ENABLE_PREVIEWS = YES;
@@ -542,7 +542,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.2.1;
+				MARKETING_VERSION = 0.2.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.snblago.SatoshiGuard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

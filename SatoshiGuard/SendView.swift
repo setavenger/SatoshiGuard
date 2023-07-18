@@ -18,6 +18,10 @@ struct SendView: View {
     @State private var psbtSigned: String = ""
     @State private var txFeeString: String = "1"
 
+    @State private var showAlert = false
+    @State private var activeAlert: ActiveAlert = .success
+    @State private var errorMessage: String = ""
+
     init(wallet: WalletManager) {
         self.walletManager = wallet
     }
@@ -73,9 +77,20 @@ struct SendView: View {
                         psbtSigned = psbt.serialize()
                     } catch {
                         print("\(error)")
+                        errorMessage = "\(error)"
+                        activeAlert = .error
+                        showAlert = true
                     }
                 }, text: "Generate PSBT", colorBg: .blue)
                     .padding(.bottom, 50)
+            }
+        }
+        .alert(isPresented: $showAlert) {
+            switch activeAlert {
+            case .success:
+                return Alert(title: Text("Success"),message: Text("Success"),dismissButton: .default(Text("OK")))
+            case .error:
+                return Alert(title: Text("Error"),message: Text(errorMessage),dismissButton: .default(Text("OK")))
             }
         }
         .navigationTitle("Send")

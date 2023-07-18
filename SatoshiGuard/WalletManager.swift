@@ -44,11 +44,13 @@ class WalletManager: ObservableObject,Identifiable {
     var blockchain: Blockchain?
 
     private(set) var wallet: Wallet? = nil
+    
     private(set) var balance: UInt64 = 21_210_210
     @Published private(set) var balanceText: String = "Setup Keys"
     @Published private(set) var transactions: [BitcoinDevKit.TransactionDetails] = []
     @Published private(set) var lastTransaction: String = "never"
 
+    @Published private(set) var nextReceiveAddress: String = ""
     
     init() {
         id = UUID() // Creates a new UUID if one isn't supplied.
@@ -90,7 +92,7 @@ class WalletManager: ObservableObject,Identifiable {
 //        print("XPRV")
 //        print(xprv)
         self.multisigDescriptor = "wsh(sortedmulti(\(threshold),\(xprv)/84'/1'/0'/0/*,\(xpubs.joined(separator: ","))))"
-        print(self.multisigDescriptor)
+//        print(self.multisigDescriptor)
         do {
             try storeWalletDTO()
         } catch {
@@ -101,7 +103,12 @@ class WalletManager: ObservableObject,Identifiable {
     public func SignPSBT(psbtString: String) throws -> PartiallySignedTransaction {
 
         let psbt = try PartiallySignedTransaction(psbtBase64: psbtString)
-        let _ = try self.wallet!.sign(psbt: psbt, signOptions: nil)
+        do {
+            let _ = try self.wallet!.sign(psbt: psbt, signOptions: nil)
+        } catch {
+            print("\(error)")
+            throw error
+        }
 
         return psbt
     }
@@ -126,11 +133,16 @@ class WalletManager: ObservableObject,Identifiable {
     }
 
     func Broadcast(psbt: PartiallySignedTransaction) throws -> String {
-        let tx = psbt.extractTx()
-        try blockchain!.broadcast(transaction: tx)
-        let txid = psbt.txid()
-        print(txid)
-        return txid
+        do {
+            let tx = psbt.extractTx()
+            try blockchain!.broadcast(transaction: tx)
+            let txid = psbt.txid()
+            print(txid)
+            return txid
+        } catch {
+            print("\(error)")
+            throw error
+        }
     }
 
     func updateMultiSigDetails(xpubs: [String], threshold: UInt8) {
@@ -161,7 +173,7 @@ class WalletManager: ObservableObject,Identifiable {
                 try self.load()
             }
         } catch {
-            print("\(error)")
+            throw error
         }
     }
 
@@ -191,14 +203,14 @@ class WalletManager: ObservableObject,Identifiable {
 //            throw Error("no multi sig descriptor built yet")
             return
         }
-        if self.balanceText == "Setup Keys" {
+//        if self.balanceText == "Setup Keys" {
             self.balanceText = "syncing"
-        }
+//        }
 
         DispatchQueue.global().async {
             print("syncing started")
             do {
-                // TODO use this progress update to show "syncing"
+                // TODO find out why this blocks receive view while syncing
                 try self.wallet!.sync(blockchain: self.blockchain!, progress: nil)
                 let balance = try self.wallet!.getBalance().confirmed
                 let wallet_transactions: [TransactionDetails] = try self.wallet!.listTransactions(includeRaw: false)
@@ -217,6 +229,7 @@ class WalletManager: ObservableObject,Identifiable {
 
                     self.transactions = wallet_transactions.sorted().reversed()
                     self.computeLastTransaction()
+                    self.newAddress()
                 }
 
             } catch let error {
@@ -226,6 +239,16 @@ class WalletManager: ObservableObject,Identifiable {
                 }
             }
         }
+    }
+    
+    func newAddress() {
+        do {
+            let addressInfo = try wallet!.getAddress(addressIndex: AddressIndex.new)
+            self.nextReceiveAddress = addressInfo.address.asString()
+        } catch {
+            self.nextReceiveAddress = "ERROR"
+        }
+
     }
 
     func storeXprvKey(xprvKeyData: String) throws {
@@ -325,7 +348,7 @@ class WalletManager: ObservableObject,Identifiable {
 
         try walletManager.loadXprvKey()
         walletManager.buildMultiSigDescriptor()
-        print(walletManager.multisigDescriptor)
+//        print(walletManager.multisigDescriptor)
 
         try walletManager.load()
         walletManager.sync()
@@ -352,7 +375,7 @@ class WalletCoordinator: ObservableObject {
 
     lazy var walletIdsStr: [String] = {
         do {
-            print(walletIdsData)
+//            print(walletIdsData)
             if let walletData = walletIdsData {
                 return try JSONDecoder().decode([String].self, from: walletData)
             }

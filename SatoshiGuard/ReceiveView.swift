@@ -14,7 +14,6 @@ let filter = CIFilter.qrCodeGenerator()
 
 struct ReceiveView: View {
     @ObservedObject var walletManager: WalletManager
-    @State private var address: String = ""
     
     init(wallet: WalletManager) {
         self.walletManager = wallet
@@ -24,16 +23,6 @@ struct ReceiveView: View {
         let length = address.count
         
         return (String(address.prefix(length / 2)), String(address.suffix(length / 2)))
-    }
-    
-    func getAddress() {
-        do {
-//            todo change here
-            let addressInfo = try walletManager.wallet!.getAddress(addressIndex: AddressIndex.new)
-            address = addressInfo.address.asString()
-        } catch {
-            address = "ERROR"
-        }
     }
     
     func generateQRCode(from string: String) -> UIImage {
@@ -53,30 +42,30 @@ struct ReceiveView: View {
         VStack {
             Spacer()
             VStack {
-                Image(uiImage: generateQRCode(from: "bitcoin:\(address)"))
+                Image(uiImage: generateQRCode(from: "bitcoin:\(self.walletManager.nextReceiveAddress)"))
                     .interpolation(.none)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 200, height: 200)
                 Spacer()
-                Text(splitAddress(address: address).0).textStyle(BasicTextStyle(white: true))
-                Text(splitAddress(address: address).1).textStyle(BasicTextStyle(white: true))
+                Text(splitAddress(address: self.walletManager.nextReceiveAddress).0).textStyle(BasicTextStyle(white: true))
+                Text(splitAddress(address: self.walletManager.nextReceiveAddress).1).textStyle(BasicTextStyle(white: true))
                     .onTapGesture(count: 1) {
-                        UIPasteboard.general.string = address
+                        UIPasteboard.general.string = self.walletManager.nextReceiveAddress
                     }
                 Spacer()
             }.contextMenu {
                 Button(action: {
-                    UIPasteboard.general.string = address}) {
+                    UIPasteboard.general.string = self.walletManager.nextReceiveAddress}) {
                         Text("Copy to clipboard")
                     }
             }
             Spacer()
-            BasicButton(action: getAddress, text: "Generate new address", colorBg: .orange)
+            BasicButton(action: walletManager.newAddress, text: "Generate new address", colorBg: .orange)
         }
 //        .background(LinearGradient(gradient: Gradient(colors: [Color.black, Color.gray]), startPoint: .top, endPoint: .bottom))
         .navigationTitle("Receive Address")
-        .onAppear(perform: getAddress)
+//        .onAppear(perform: getAddress)
     }
 }
 

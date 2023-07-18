@@ -13,3 +13,7 @@ extension String {
         return String(self.dropFirst(prefix.count))
     }
 }
+
+enum ActiveAlert {
+    case success, error
+}

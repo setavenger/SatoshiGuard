@@ -11,30 +11,38 @@ import SwiftUI
 struct DynamicTextFieldView: View {
     @ObservedObject var walletManager: WalletManager
 
-//    @State private var textFields: [String] = [""]
+    @State private var localXpubs: [String]
     @State private var pickerSelection: UInt8 = 1
-    @State private var showAlert = false
 
+    @State private var showAlert = false
+    @State private var activeAlert: ActiveAlert = .success
+    @State private var errorMessage: String = ""
+    
+    init (walletManager: WalletManager) {
+        self.walletManager = walletManager
+        localXpubs = walletManager.xpubs
+    }
+    
     var body: some View {
         
         VStack(alignment: .center) {
             ScrollView{
-                ForEach(Array(walletManager.xpubs.indices), id: \.self) { index in
+                ForEach(Array(localXpubs.indices), id: \.self) { index in
                     HStack {
-                        TextField("Xpub \(index + 1)", text: $walletManager.xpubs[index])
+                        TextField("Xpub \(index + 1)", text: $localXpubs[index])
                         Spacer()
                         Button(action: {
-                            if index == walletManager.xpubs.count - 1 {
+                            if index == localXpubs.count - 1 {
                                 // If it's the last text field, add a new one.
-                                walletManager.xpubs.append("")
+                                localXpubs.append("")
                             } else {
                                 // If it's not the last one, remove this text field.
-                                walletManager.xpubs.remove(at: index)
+                                localXpubs.remove(at: index)
                             }
-                            walletManager.threshold = min(walletManager.threshold, UInt8(walletManager.xpubs.count+1))
+                            walletManager.threshold = min(walletManager.threshold, UInt8(localXpubs.count+1))
 
                         }) {
-                            Image(systemName: index == walletManager.xpubs.count - 1 ? "plus.circle" : "minus.circle")
+                            Image(systemName: index == localXpubs.count - 1 ? "plus.circle" : "minus.circle")
                                 .resizable()
                                 .frame(width: 24, height: 24)
                                 .padding()
@@ -42,16 +50,23 @@ struct DynamicTextFieldView: View {
                     }
                 }
                 Picker("Policy", selection: $walletManager.threshold) {
-                    ForEach(1...walletManager.xpubs.count+1, id: \.self) { num in
+                    ForEach(1...localXpubs.count+1, id: \.self) { num in
                         Text("\(num)").tag(UInt8(num))
                     }
                 }
                 .pickerStyle(.automatic)
-                Text("Policy: \(walletManager.threshold) of \(walletManager.xpubs.count+1)")
+                Text("Policy: \(walletManager.threshold) of \(localXpubs.count+1)")
                     .font(.headline)
                 Button(action: {
-                    walletManager.updateMultiSigDetails(xpubs: walletManager.xpubs, threshold: walletManager.threshold)
-                    self.showAlert = true
+                    errorMessage = verifyValidXpubs(xpubs: localXpubs)
+                    if errorMessage == "" {
+                        walletManager.updateMultiSigDetails(xpubs: localXpubs, threshold: walletManager.threshold)
+                        self.activeAlert = .success
+                        self.showAlert = true
+                    } else {
+                        self.activeAlert = .error
+                        self.showAlert = true
+                    }
                 }) {
                     Text("Confirm")
                     .font(.headline)
@@ -59,20 +74,38 @@ struct DynamicTextFieldView: View {
                     .padding()
                     .background(.orange)
                     .cornerRadius(10)
-                }.alert(isPresented: $showAlert) {
-                    Alert(title: Text("Success"),
-                          message: Text("Your action was successful."),
-                          dismissButton: .default(Text("OK")))
                 }
+                .alert(isPresented: $showAlert) {
+                    switch activeAlert {
+                    case .success:
+                        return Alert(title: Text("Success"), message: Text("xpubs successfully updated"), dismissButton: .default(Text("OK")))
+                    case .error:
+                        return Alert(title: Text("Error"), message: Text(errorMessage), dismissButton: .default(Text("OK")))
+                    }
+                }
+                
                 Spacer()
                 
             }
             .padding()
         }
+        .navigationTitle("Xpubs")
         .background(LinearGradient(gradient: Gradient(colors: [Color.black, Color.gray]), startPoint: .top, endPoint: .bottom))
     }
 }
 
+
+func verifyValidXpubs(xpubs: [String]) -> String {
+    if xpubs.contains("") {
+        return "please remove empty xpubs"
+    }
+    for xpub in xpubs {
+        if xpub.count != 135 {
+            return "invalid XPUB detected"
+        }
+    }
+    return ""
+}
 
 //struct InputView: View {
 //    @ObservedObject var walletManager: WalletManager

@@ -52,15 +52,38 @@ struct HomeView: View {
                     .font(.system(size: 20))
                     .foregroundStyle(.orange)
             }.padding(.top)
-            NavigationLink(destination: TxsView(walletManager: walletManager)) {
-                Text("Transactions")
-                    .font(.headline)
-                    .foregroundColor(.black)
-                    .padding()
-                    .background(Color.orange)
-                    .cornerRadius(10)
+            
+            GeometryReader { geometry in
+                HStack(spacing: 10) {
+                    Button(action: {
+                        do {
+                            try walletManager.loadXprvKey()
+                            try walletManager.load()
+                            walletManager.sync()
+                        } catch {
+                            print("\(error)")
+                        }
+                    }) {
+                        Text("Sync Wallet")
+                            .frame(width: geometry.size.width/2 - 15, height: 50)
+                            .font(.headline)
+                            .foregroundColor(.orange)
+                            .background(Color("Shadow"))
+                            .cornerRadius(10)
+                    }
+                    NavigationLink(destination: TxsView(walletManager: walletManager)) {
+                        Text("Transactions")
+                            .frame(width: geometry.size.width/2 - 15, height: 50)
+                            .font(.headline)
+                            .foregroundColor(.black)
+                            .background(Color.orange)
+                            .cornerRadius(10)
+                    }
+                }.padding(.horizontal, 10)
             }
-            .padding(.top, 50)
+            .frame(height: 50)
+            .padding(.bottom, 75)
+            
             Spacer()
             Spacer()
             
@@ -100,13 +123,13 @@ struct HomeView: View {
         }
         .background(LinearGradient(gradient: Gradient(colors: [Color.black, Color.gray]), startPoint: .top, endPoint: .bottom))
         .onAppear{
-            do {
-                try walletManager.loadXprvKey()
-                try walletManager.load()
-                walletManager.sync()
-            } catch {
-                print("\(error)")
-            }
+//            do {
+//                try walletManager.loadXprvKey()
+//                try walletManager.load()
+//                walletManager.sync()
+//            } catch {
+//                print("\(error)")
+//            }
         }
     }
 }
