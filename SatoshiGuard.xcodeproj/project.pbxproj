@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9512D5832A641BDA00CDBEB4 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 9512D5822A641BDA00CDBEB4 /* README.md */; };
+		9512D5852A66F1B700CDBEB4 /* PSBTQRView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9512D5842A66F1B700CDBEB4 /* PSBTQRView.swift */; };
 		957911262A6273DF003AB79B /* WalletHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 957911252A6273DF003AB79B /* WalletHomeView.swift */; };
 		95C67C312A6145820038E39F /* SatoshiGuardApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C67C302A6145820038E39F /* SatoshiGuardApp.swift */; };
 		95C67C332A6145820038E39F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C67C322A6145820038E39F /* ContentView.swift */; };
@@ -52,6 +53,7 @@
 
 /* Begin PBXFileReference section */
 		9512D5822A641BDA00CDBEB4 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		9512D5842A66F1B700CDBEB4 /* PSBTQRView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSBTQRView.swift; sourceTree = "<group>"; };
 		957911252A6273DF003AB79B /* WalletHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletHomeView.swift; sourceTree = "<group>"; };
 		95C67C2D2A6145820038E39F /* SatoshiGuard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SatoshiGuard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		95C67C302A6145820038E39F /* SatoshiGuardApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SatoshiGuardApp.swift; sourceTree = "<group>"; };
@@ -149,6 +151,7 @@
 				95C67C362A6145850038E39F /* Preview Content */,
 				95C67C792A61ECF20038E39F /* OverviewView.swift */,
 				957911252A6273DF003AB79B /* WalletHomeView.swift */,
+				9512D5842A66F1B700CDBEB4 /* PSBTQRView.swift */,
 			);
 			path = SatoshiGuard;
 			sourceTree = "<group>";
@@ -320,6 +323,7 @@
 			files = (
 				95C67C6D2A614ED50038E39F /* KeyView.swift in Sources */,
 				95C67C692A614ED50038E39F /* KeyManagement.swift in Sources */,
+				9512D5852A66F1B700CDBEB4 /* PSBTQRView.swift in Sources */,
 				95C67C6B2A614ED50038E39F /* XpubInputView.swift in Sources */,
 				95C67C6F2A614ED50038E39F /* WalletManager.swift in Sources */,
 				95C67C5D2A614EC80038E39F /* TxsView.swift in Sources */,
@@ -489,7 +493,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"SatoshiGuard/Preview Content\"";
 				DEVELOPMENT_TEAM = N4KJS45H4D;
 				ENABLE_PREVIEWS = YES;
@@ -523,7 +527,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"SatoshiGuard/Preview Content\"";
 				DEVELOPMENT_TEAM = N4KJS45H4D;
 				ENABLE_PREVIEWS = YES;

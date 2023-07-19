@@ -11,7 +11,8 @@ import SwiftUI
 struct KeyView: View {
     @ObservedObject var walletManager: WalletManager
 
-
+    @State var isShowingSheet: Bool = false
+    
     init(walletManager: WalletManager) {
         self.walletManager = walletManager
 //        print(walletManager)
@@ -20,7 +21,7 @@ struct KeyView: View {
     var body: some View {
         VStack{
             Spacer()
-            VStack{
+            VStack(alignment: .center){
                 Divider()
                 VStack(alignment: .leading, spacing: -10){
                     Text("xprv:").padding(.horizontal)
@@ -60,6 +61,11 @@ struct KeyView: View {
                     }
                     .padding()
                 }
+                Button(action:{
+                    isShowingSheet = true
+                }) {
+                    Text("Show QR Code")
+                }
                 Divider()
             }
             Spacer()
@@ -75,5 +81,41 @@ struct KeyView: View {
         }
         .navigationTitle("Keys")
         .background(LinearGradient(gradient: Gradient(colors: [Color.black, Color.gray]), startPoint: .top, endPoint: .bottom))
+        .sheet(isPresented: $isShowingSheet) {
+            XpubQRView(xpub: walletManager.xpub)
+        }
+    }
+}
+
+struct XpubQRView: View{
+    @State var xpub: String
+    
+    init(xpub: String) {
+        self.xpub = xpub
+    }
+    
+    func generateQRCode(dataStr: String) -> UIImage {
+        let data = Data(dataStr.utf8)
+        filter.setValue(data, forKey: "inputMessage")
+
+        if let outputImage = filter.outputImage {
+            if let cgimg = context.createCGImage(outputImage, from: outputImage.extent) {
+                return UIImage(cgImage: cgimg)
+            }
+        }
+
+        return UIImage(systemName: "xmark.circle") ?? UIImage()
+    }
+    
+    var body: some View {
+        VStack{
+            Spacer()
+            Image(uiImage: generateQRCode(dataStr: "\(xpub)"))
+                .interpolation(.none)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 200, height: 200)
+            Spacer()
+        }
     }
 }

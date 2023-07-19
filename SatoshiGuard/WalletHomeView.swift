@@ -59,7 +59,7 @@ struct HomeView: View {
                         do {
                             try walletManager.loadXprvKey()
                             try walletManager.load()
-                            walletManager.sync()
+                            walletManager.sync(background: false)
                         } catch {
                             print("\(error)")
                         }
@@ -123,13 +123,13 @@ struct HomeView: View {
         }
         .background(LinearGradient(gradient: Gradient(colors: [Color.black, Color.gray]), startPoint: .top, endPoint: .bottom))
         .onAppear{
-//            do {
-//                try walletManager.loadXprvKey()
-//                try walletManager.load()
-//                walletManager.sync()
-//            } catch {
-//                print("\(error)")
-//            }
+            do {
+                try walletManager.loadXprvKey()
+                try walletManager.load()
+                walletManager.sync(background: true)
+            } catch {
+                print("\(error)")
+            }
         }
     }
 }

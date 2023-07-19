@@ -165,6 +165,7 @@ class WalletManager: ObservableObject,Identifiable {
             self.xprv = descriptorNew.asString().replacingOccurrences(of: "/*", with: "")
 
             try self.storeXprvKey(xprvKeyData: self.xprv)
+            try self.storeWalletDTO()
             try computeXpub()
 
             print(self.xpub)
@@ -198,14 +199,15 @@ class WalletManager: ObservableObject,Identifiable {
         }
     }
 
-    func sync() {
+    func sync(background: Bool) {
         if multisigDescriptor == "" {
 //            throw Error("no multi sig descriptor built yet")
             return
         }
-//        if self.balanceText == "Setup Keys" {
+        
+        if !background || self.balanceText == "Setup Keys" {
             self.balanceText = "syncing"
-//        }
+        }
 
         DispatchQueue.global().async {
             print("syncing started")
@@ -345,13 +347,18 @@ class WalletManager: ObservableObject,Identifiable {
         default:
             walletManager.setNetwork(network: Network.testnet)
         }
+        
+        do {
+            try walletManager.loadXprvKey()
+            walletManager.buildMultiSigDescriptor()
+    //        print(walletManager.multisigDescriptor)
 
-        try walletManager.loadXprvKey()
-        walletManager.buildMultiSigDescriptor()
-//        print(walletManager.multisigDescriptor)
+            try walletManager.load()
+            walletManager.sync(background: true)
 
-        try walletManager.load()
-        walletManager.sync()
+        } catch {
+            print("\(error)")
+        }
 
         return walletManager
     }
@@ -444,22 +451,3 @@ class WalletCoordinator: ObservableObject {
 }
 
 
-extension TransactionDetails: Comparable {
-    public static func <(lhs: TransactionDetails, rhs: TransactionDetails) -> Bool {
-
-        let lhs_timestamp: UInt64 = lhs.confirmationTime?.timestamp ?? UInt64.max;
-        let rhs_timestamp: UInt64 = rhs.confirmationTime?.timestamp ?? UInt64.max;
-
-        return lhs_timestamp < rhs_timestamp
-    }
-}
-
-extension TransactionDetails: Equatable {
-    public static func ==(lhs: TransactionDetails, rhs: TransactionDetails) -> Bool {
-
-        let lhs_timestamp: UInt64 = lhs.confirmationTime?.timestamp ?? UInt64.max;
-        let rhs_timestamp: UInt64 = rhs.confirmationTime?.timestamp ?? UInt64.max;
-
-        return lhs_timestamp == rhs_timestamp
-    }
-}

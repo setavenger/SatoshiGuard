@@ -22,6 +22,8 @@ struct SendView: View {
     @State private var activeAlert: ActiveAlert = .success
     @State private var errorMessage: String = ""
 
+    @State private var isShowingQRCode = false
+
     init(wallet: WalletManager) {
         self.walletManager = wallet
     }
@@ -60,6 +62,14 @@ struct SendView: View {
                
                 if psbtSigned != "" {
                     Button(action: {
+                        isShowingQRCode = true
+                    }) {
+                        Text("Show QR Code")
+                            .font(.headline)
+                            .foregroundColor(.orange)
+                            .padding()
+                    }
+                    Button(action: {
                         let pasteboard = UIPasteboard.general
                         pasteboard.string = psbtSigned
                     }) {
@@ -70,7 +80,7 @@ struct SendView: View {
                     }
                 }
                 Spacer()
-                BasicButton(action: { self.isShowingScanner = true}, text: "Scan Address", colorBg: .orange)
+                BasicButton(action: { self.isShowingScanner = true}, text: "Scan Address", colorBg: .orange, fontCol: Color("Shadow"))
                 BasicButton(action: {
                     do {
                         let psbt = try walletManager.createTransaction(recipient: to, amount: UInt64(amount)!, txFee: Double(txFeeString)!)
@@ -81,7 +91,7 @@ struct SendView: View {
                         activeAlert = .error
                         showAlert = true
                     }
-                }, text: "Generate PSBT", colorBg: .blue)
+                }, text: "Generate PSBT", colorBg: .blue, fontCol: Color("Shadow"))
                     .padding(.bottom, 50)
             }
         }
@@ -95,20 +105,15 @@ struct SendView: View {
         }
         .navigationTitle("Send")
         .sheet(isPresented: $isShowingScanner) {
-                CodeScannerView(codeTypes: [.qr], simulatedData: "Testing1234", completion: self.handleScan)
-        }.onTapGesture {
+            CodeScannerView(codeTypes: [.qr], simulatedData: "Testing1234", completion: self.handleScan)
+        }
+        .sheet(isPresented: $isShowingQRCode) {
+            PSBTQRView(psbt: psbtSigned)
+        }
+        .onTapGesture {
             self.endTextEditing()
         }
                 
     }
 }
 
-
-struct BasicTextFieldStyle: ViewModifier {
-    func body(content: Content) -> some View {
-        content
-            .disableAutocorrection(true)
-            .textFieldStyle(.roundedBorder)
-            .textInputAutocapitalization(.never)
-    }
-}

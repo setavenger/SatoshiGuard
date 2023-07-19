@@ -61,7 +61,7 @@ struct ReceiveView: View {
                     }
             }
             Spacer()
-            BasicButton(action: walletManager.newAddress, text: "Generate new address", colorBg: .orange)
+            BasicButton(action: walletManager.newAddress, text: "Generate new address", colorBg: .orange, fontCol: Color("Shadow"))
         }
 //        .background(LinearGradient(gradient: Gradient(colors: [Color.black, Color.gray]), startPoint: .top, endPoint: .bottom))
         .navigationTitle("Receive Address")
@@ -73,19 +73,18 @@ struct BasicButton: View {
     var action: () -> Void
     var text: String
     var colorBg: Color
-
+    var fontCol: Color
     
     var body: some View {
         Button(action: action) {
             Text(text)
-                .font(.system(size: 14, design: .monospaced))
-                .fontWeight(.bold)
-                .frame(maxWidth: .infinity, maxHeight: 40)
-                .foregroundColor(Color(.white))
+                .font(.headline)
+                .frame(maxWidth: .infinity, minHeight: 30)
+                .foregroundColor(fontCol)
                 .padding(10)
                 .background(colorBg)
                 .cornerRadius(10.0)
-                .shadow(color: Color("Shadow"), radius: 1, x: 5, y: 5)
+//                .shadow(color: Color("Shadow"), radius: 1, x: 5, y: 5)
         }
     }
 }

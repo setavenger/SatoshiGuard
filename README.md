@@ -4,6 +4,8 @@
 
 Satoshi Guard is an iOS app to create and manage Bitcoin mulitsignature wallets. The app was created using the [Bitcoin Development Kit (BDK)](https://bitcoindevkit.org/) and was heavily inspired by the [BDKSwiftSample](https://github.com/futurepaul/BdkSwiftSample) app. The app already offers the core of features. It is possible to send and receive funds only with the app. Furthermore it is possible to setup a completly new wallet from scratch. The app supports both testnet and the Bitcoin mainnet. 
 
+### Testflight
+The app is currently in testflight available [here](https://testflight.apple.com/join/dq0ciBGx). I'm happy about any feedback and improvement ideas. 
 
 ### Technical Details
 Currently a multisignature wallet is created from three keys so an m-of-3 wallet is created in the app. In the future it will be possible to create a multisignature wallet with any number of keys. 
@@ -17,6 +19,7 @@ Private keys are created from a 12 or 24 word mnemonic seed. The extended public
 - [ ] Fix thread blocking syncs when switching to receive view to fast after opening home view
 - [ ] Improve error handling
 - [ ] Write tests
+- [ ] Improve sharing of PSBTs
 
 
 ## Caveats

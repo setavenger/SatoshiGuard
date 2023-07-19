@@ -7,6 +7,8 @@
 
 import Foundation
 import SwiftUI
+import CodeScanner
+
 
 struct SignView: View {
 
@@ -20,19 +22,26 @@ struct SignView: View {
     @State private var successMessage: String = ""
     
     @State private var psbtSigned: String = ""
-    
     @State private var successTXID: String = ""
     
-    
+    @State private var isShowingScanner = false
+    @State private var isShowingQRCode = false
+
     init(wallet: WalletManager) {
         walletManager = wallet
+    }
+    
+    func handleScan(result: Result<ScanResult, ScanError>) {
+        if case let .success(result) = result {
+            psbtString = result.string
+        }
+        self.isShowingScanner = false
     }
     
     var body: some View {
         GeometryReader{ geometry in
             VStack {
-                Spacer()
-                VStack{
+                VStack (spacing: -10) {
                     Text("Enter PSBT below:")
                         .foregroundColor(.white)
                     TextEditor(text: $psbtString)
@@ -61,6 +70,14 @@ struct SignView: View {
                                 .font(.headline)
                                 .padding()
                         }
+                        Button(action: {
+                            isShowingQRCode = true
+                        }) {
+                            Text("Show PSBT QR")
+                                .font(.headline)
+                                .foregroundColor(.orange)
+                                .padding()
+                        }
                     }
                     if successTXID != "" {
                         Button(action: {
@@ -73,32 +90,29 @@ struct SignView: View {
                         }
                     }
                 }
-                VStack{
-                    Button(action: {
-                        do {
-                            let psbt = try walletManager.SignPSBT(psbtString: psbtString)
-                            psbtSigned = psbt.serialize()
-//                            self.successMessage = "PSBT was signed successfully"
-//                            self.activeAlert = .success
-//                            self.showAlert = true
-                        } catch {
-                            errorMessage = "\(error)"
-                            print("\(error)")
-                            self.activeAlert = .error
-                            self.showAlert = true
-                        }
-                    }) {
-                        Text("Sign")
-                            .font(.headline)
-                            .padding()
-                            .frame(width: geometry.size.width - 30, height: 50)
-                            .foregroundColor(.black)
-                            .background(Color.orange)
-                            .cornerRadius(10)
-                            .padding()
+                Spacer()
+                VStack {
+                    HStack{
+                        BasicButton(action: {isShowingScanner = true}, text: "Scan QR Code", colorBg: .blue, fontCol: Color("Shadow"))
+                            .frame(width: geometry.size.width/2 - 25 )
+                        BasicButton(action: {
+                            do {
+                                let psbt = try walletManager.SignPSBT(psbtString: psbtString)
+                                psbtSigned = psbt.serialize()
+    //                            self.successMessage = "PSBT was signed successfully"
+    //                            self.activeAlert = .success
+    //                            self.showAlert = true
+                            } catch {
+                                errorMessage = "\(error)"
+                                print("\(error)")
+                                self.activeAlert = .error
+                                self.showAlert = true
+                            }
+                        }, text: "Sign", colorBg: Color("Shadow"), fontCol: .orange)
+                            .frame(width: geometry.size.width/2 - 25 )
                     }
-
-                    Button(action: {
+                    
+                    BasicButton(action: {
                         do {
                             let psbt = try walletManager.SignPSBT(psbtString: psbtString)
                             successTXID = try walletManager.Broadcast(psbt: psbt)
@@ -109,21 +123,13 @@ struct SignView: View {
                             errorMessage = "\(error)"
                             print("\(error)")
                             self.activeAlert = .error
-                            self.showAlert = true                        }
-                    }) {
-                        Text("Sign and Broadcast")
-                            .font(.headline)
-                            .foregroundColor(.black)
-                            .padding()
-                            .frame(width: geometry.size.width - 30, height: 50)
-                            .background(Color.blue)
-                            .cornerRadius(10)
-                    }
+                            self.showAlert = true
+                        }
+                    }, text: "Sign and Broadcast", colorBg: .orange, fontCol: Color("Shadow"))
                 }
                 .padding(.horizontal, 20)
+                .padding(.bottom, 10)
                 .frame(width: geometry.size.width)
-                Spacer()
-                Spacer()
             }
             .alert(isPresented: $showAlert) {
                 switch activeAlert {
@@ -138,6 +144,12 @@ struct SignView: View {
         .navigationTitle("Sign and Broadcast")
         .onTapGesture {
             self.endTextEditing()
+        }
+        .sheet(isPresented: $isShowingScanner) {
+            CodeScannerView(codeTypes: [.qr], simulatedData: "Testing1234", completion: self.handleScan)
+        }
+        .sheet(isPresented: $isShowingQRCode) {
+            PSBTQRView(psbt: psbtSigned)
         }
     }
 }
