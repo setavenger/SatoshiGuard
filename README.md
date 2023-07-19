@@ -6,8 +6,10 @@ been audited*
 Satoshi Guard is an iOS app to create and manage Bitcoin mulitsignature wallets. The app was created using
 the [Bitcoin Development Kit (BDK)](https://bitcoindevkit.org/) and was heavily inspired by
 the [BDKSwiftSample](https://github.com/futurepaul/BdkSwiftSample) app. The app already offers the core of features. It
-is possible to send and receive funds only with the app. Furthermore it is possible to setup a completly new wallet from
+is possible to send and receive funds only with the app. Furthermore, it is possible to set up a completely new wallet from
 scratch. The app supports both testnet and the Bitcoin mainnet.
+
+<img src="./combo-view-wallets-home.png" width="50%" height="50%" />
 
 ## Testflight
 
