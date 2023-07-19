@@ -32,6 +32,8 @@ struct DynamicTextFieldView: View {
             for (index, _) in localXpubs.enumerated() {
                 if localXpubs[index] == "" {
                     localXpubs[index] = result.string
+                    self.isShowingScanner = false
+                    return
                 }
             }
             localXpubs.append(result.string)
