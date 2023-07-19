@@ -45,6 +45,7 @@ struct SignView: View {
                     Text("Enter PSBT below:")
                         .foregroundColor(.white)
                     TextEditor(text: $psbtString)
+                        .textInputAutocapitalization(.never)
                         .scrollContentBackground(.hidden)
                         .frame(height: 200)
                         .padding()

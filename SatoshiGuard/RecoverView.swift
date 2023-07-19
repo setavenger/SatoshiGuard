@@ -28,6 +28,7 @@ struct RecoverView: View {
             Spacer()
             Text("Enter 12 or 24 Words")
             TextEditor(text: $inputText)
+                .textInputAutocapitalization(.never)
                 .scrollContentBackground(.hidden)
                 .frame(height: 200)
                 .padding()
