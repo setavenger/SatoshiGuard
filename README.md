@@ -86,3 +86,7 @@ Currently, the balance display is not optimal. The change from a sending transac
 therefor not counted into the balance. So if a wallet only has one utxo and sends a transaction the balance will be
 temporarily displayed as zero. The reason is that the one utxo that the wallet held is spent and the change is not yet
 recognized as settled. A better handling of this situation is on the todo list. 
+
+
+## Me
+npub14agjgx6a67trjefrvllewlju2l92pyttuud2pfhydjguc63zvehs88dadk
