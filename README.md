@@ -13,7 +13,7 @@ scratch. The app supports both testnet and the Bitcoin mainnet.
 
 ## Testflight
 
-The app is currently in testflight available [here](https://testflight.apple.com/join/dq0ciBGx). I'm happy about any
+The app is currently available for download in testflight [here](https://testflight.apple.com/join/dq0ciBGx). I'm happy about any
 feedback and improvement ideas.
 
 ## Getting Started

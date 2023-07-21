@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import CodeScanner
+import AVFoundation
 
 struct DynamicTextFieldView: View {
     @ObservedObject var walletManager: WalletManager
@@ -109,7 +110,7 @@ struct DynamicTextFieldView: View {
         .navigationTitle("Xpubs")
         .background(LinearGradient(gradient: Gradient(colors: [Color.black, Color.gray]), startPoint: .top, endPoint: .bottom))
         .sheet(isPresented: $isShowingScanner) {
-                CodeScannerView(codeTypes: [.qr], simulatedData: "Testing1234", completion: self.handleScan)
+                CodeScannerView(codeTypes: [.qr], simulatedData: "Testing1234", videoCaptureDevice: AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back), completion: self.handleScan)
         }.onTapGesture {
             self.endTextEditing()
         }

@@ -7,6 +7,7 @@
 import SwiftUI
 import CodeScanner
 import Combine
+import AVFoundation
 
 
 struct SendView: View {
@@ -105,7 +106,7 @@ struct SendView: View {
         }
         .navigationTitle("Send")
         .sheet(isPresented: $isShowingScanner) {
-            CodeScannerView(codeTypes: [.qr], simulatedData: "Testing1234", completion: self.handleScan)
+            CodeScannerView(codeTypes: [.qr], simulatedData: "Testing1234", videoCaptureDevice: AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back),completion: self.handleScan)
         }
         .sheet(isPresented: $isShowingQRCode) {
             PSBTQRView(psbt: psbtSigned)
