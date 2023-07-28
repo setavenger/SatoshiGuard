@@ -10,6 +10,8 @@ import SwiftUI
 import CodeScanner
 import AVFoundation
 
+let maxXpubs = 2
+
 struct DynamicTextFieldView: View {
     @ObservedObject var walletManager: WalletManager
 
@@ -37,7 +39,13 @@ struct DynamicTextFieldView: View {
                     return
                 }
             }
-            localXpubs.append(result.string)
+            if localXpubs.count < maxXpubs {
+                localXpubs.append(result.string)
+            } else {
+                errorMessage = "Only up to 2 xpubs allowed at the moment"
+                activeAlert = .error
+                showAlert = true
+            }
         }
         self.isShowingScanner = false
         
@@ -52,21 +60,23 @@ struct DynamicTextFieldView: View {
                         HStack {
                             TextField("Xpub \(index + 1)", text: $localXpubs[index])
                             Spacer()
-                            Button(action: {
-                                if index == localXpubs.count - 1 {
-                                    // If it's the last text field, add a new one.
-                                    localXpubs.append("")
-                                } else {
-                                    // If it's not the last one, remove this text field.
-                                    localXpubs.remove(at: index)
-                                }
-                                walletManager.threshold = min(walletManager.threshold, UInt8(localXpubs.count+1))
+                            if index < maxXpubs - 1 {
+                                Button(action: {
+                                    if index == localXpubs.count - 1 {
+                                        // If it's the last text field, add a new one.
+                                        localXpubs.append("")
+                                    } else {
+                                        // If it's not the last one, remove this text field.
+                                        localXpubs.remove(at: index)
+                                    }
+                                    walletManager.threshold = min(walletManager.threshold, UInt8(localXpubs.count+1))
 
-                            }) {
-                                Image(systemName: index == localXpubs.count - 1 ? "plus.circle" : "minus.circle")
-                                    .resizable()
-                                    .frame(width: 24, height: 24)
-                                    .padding()
+                                }) {
+                                    Image(systemName: index == localXpubs.count - 1 ? "plus.circle" : "minus.circle")
+                                        .resizable()
+                                        .frame(width: 24, height: 24)
+                                        .padding()
+                                }
                             }
                         }
                     }

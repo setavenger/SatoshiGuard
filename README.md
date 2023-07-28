@@ -1,7 +1,7 @@
 # Satoshi Guard
 
-*Important: Only put play money into this wallet as it is still under very active development and the software has not
-been audited*
+*Important: Wallet has been thoroughly tested for m-of-2 and m-of-3 wallets. Be advised that someone who has access to your __unlocked__ phone may gain access to your keys*
+
 
 Satoshi Guard is an iOS app to create and manage Bitcoin mulitsignature wallets. The app was created using
 the [Bitcoin Development Kit (BDK)](https://bitcoindevkit.org/) and was heavily inspired by
