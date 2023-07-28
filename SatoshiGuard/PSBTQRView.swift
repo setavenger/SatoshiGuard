@@ -35,7 +35,7 @@ struct PSBTQRView: View{
                 .interpolation(.none)
                 .resizable()
                 .scaledToFit()
-                .frame(width: 200, height: 200)
+                .frame(width: 350, height: 350)
             Spacer()
         }
     }

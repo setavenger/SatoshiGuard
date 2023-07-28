@@ -22,6 +22,21 @@ struct HomeView: View {
     
     var body: some View {
         VStack {
+            HStack{
+                Spacer ()
+                Text("\(walletManager.name)")
+                    .font(.headline)
+                if walletManager.network == .testnet {
+                    Text("\(walletManager.networkStr)")
+                        .font(.headline)
+                        .foregroundColor(.red)
+                } else {
+                    Text("\(walletManager.networkStr)")
+                        .font(.headline)
+                        .foregroundColor(.green)
+                }
+                Spacer ()
+            }
             HStack {
 //                NavigationLink(destination: InputView(walletManager: walletManager)) {
                 NavigationLink(destination: DynamicTextFieldView(walletManager: walletManager)) {

@@ -27,16 +27,27 @@ struct RecoverView: View {
         VStack {
             Spacer()
             Text("Enter 12 or 24 Words")
-            TextEditor(text: $inputText)
-                .textInputAutocapitalization(.never)
-                .scrollContentBackground(.hidden)
-                .frame(height: 200)
-                .padding()
-                .border(Color.gray, width: 2)
-                .padding()
-                .disableAutocorrection(true)
-                .background(Color.clear)
-
+            if #available(iOS 16.0, *) {
+                TextEditor(text: $inputText)
+                    .textInputAutocapitalization(.never)
+                    .scrollContentBackground(.hidden)
+                    .frame(height: 200)
+                    .padding()
+                    .border(Color.gray, width: 2)
+                    .padding()
+                    .disableAutocorrection(true)
+                    .background(Color.clear)
+            } else {
+                TextEditor(text: $inputText)
+                    .textInputAutocapitalization(.never)
+                    .background(Color.clear)
+                    .frame(height: 200)
+                    .padding()
+                    .border(Color.gray, width: 2)
+                    .padding()
+                    .disableAutocorrection(true)
+                    .background(Color.clear)
+            }
             GeometryReader { geometry in
                 VStack{
                     HStack(spacing: 10) {

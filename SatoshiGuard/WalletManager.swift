@@ -230,14 +230,14 @@ class WalletManager: ObservableObject,Identifiable {
                     }
 
                     self.transactions = wallet_transactions.sorted().reversed()
+                    print(self.transactions.first ?? "")
                     self.computeLastTransaction()
                     self.newAddress()
                 }
-
             } catch let error {
                 print(error)
                 DispatchQueue.main.async {
-//                    self.syncState = .failed(error)
+                    self.balanceText = "error"
                 }
             }
         }

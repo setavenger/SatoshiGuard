@@ -45,15 +45,27 @@ struct SignView: View {
                 VStack (spacing: -10) {
                     Text("Enter PSBT below:")
                         .foregroundColor(.white)
-                    TextEditor(text: $psbtString)
-                        .textInputAutocapitalization(.never)
-                        .scrollContentBackground(.hidden)
-                        .frame(height: 200)
-                        .padding()
-                        .border(Color.gray, width: 2)
-                        .padding()
-                        .disableAutocorrection(true)
-                        .background(Color.clear)
+                    if #available(iOS 16.0, *) {
+                        TextEditor(text: $psbtString)
+                            .textInputAutocapitalization(.never)
+                            .scrollContentBackground(.hidden)
+                            .frame(height: 200)
+                            .padding()
+                            .border(Color.gray, width: 2)
+                            .padding()
+                            .disableAutocorrection(true)
+                            .background(Color.clear)
+                    } else {
+                        TextEditor(text: $psbtString)
+                            .textInputAutocapitalization(.never)
+                            .background(Color.clear)
+                            .frame(height: 200)
+                            .padding()
+                            .border(Color.gray, width: 2)
+                            .padding()
+                            .disableAutocorrection(true)
+                            .background(Color.clear)
+                    }
                     Button(action: {
                         let pasteboard = UIPasteboard.general
                         psbtString = pasteboard.string ?? ""

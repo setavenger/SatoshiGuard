@@ -78,7 +78,7 @@ e.g. [bdk-cli](https://github.com/bitcoindevkit/bdk-cli)).
 - [ ] Write tests
 - [x] Allow QR-Code sharing of PSBTs
 - [ ] Improve sharing of PSBTs
-- [ ] Enable combination of individually signed PSBTs
+- [ ] Add support for combination of individually signed PSBTs
 
 ## Caveats
 
