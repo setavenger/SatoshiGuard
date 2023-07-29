@@ -39,15 +39,15 @@ struct DynamicTextFieldView: View {
                     return
                 }
             }
-            if localXpubs.count < maxXpubs {
-                localXpubs.append(result.string)
-            } else {
-                errorMessage = "Only up to 2 xpubs allowed at the moment"
-                activeAlert = .error
-                showAlert = true
-            }
+//            if localXpubs.count < maxXpubs {
+//                localXpubs.append(result.string)
+//            } else {
+//                errorMessage = "Only up to 2 xpubs allowed at the moment"
+//                activeAlert = .error
+//                showAlert = true
+//            }
 //            todo use this instead to allow bigger multisig wallets
-//            localXpubs.append(result.string)
+            localXpubs.append(result.string)
 
         }
         self.isShowingScanner = false
@@ -63,7 +63,7 @@ struct DynamicTextFieldView: View {
                             TextField("Xpub \(index + 1)", text: $localXpubs[index])
                             Spacer()
                             // todo remove "if index < maxXpubs - 1" to allow bigger multisig wallets
-                            if index < maxXpubs - 1 {
+//                            if index < maxXpubs - 1 {
                                 Button(action: {
                                     if index == localXpubs.count - 1 {
                                         // If it's the last text field, add a new one.
@@ -80,7 +80,7 @@ struct DynamicTextFieldView: View {
                                         .frame(width: 24, height: 24)
                                         .padding()
                                 }
-                            }
+//                            }
                         }
                     }
                     Picker("Policy", selection: $walletManager.threshold) {
