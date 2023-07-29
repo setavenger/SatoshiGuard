@@ -38,7 +38,6 @@ struct HomeView: View {
                 Spacer ()
             }
             HStack {
-//                NavigationLink(destination: InputView(walletManager: walletManager)) {
                 NavigationLink(destination: DynamicTextFieldView(walletManager: walletManager)) {
                 
                     Image(systemName: "person.3.fill")

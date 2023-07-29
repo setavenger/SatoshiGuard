@@ -25,7 +25,6 @@ struct WalletDTO: Codable {
 
 class WalletManager: ObservableObject,Identifiable {
 
-//    var id: String = ""
     var walletDTO: WalletDTO = WalletDTO()
     
     @Published var id: UUID
@@ -40,7 +39,7 @@ class WalletManager: ObservableObject,Identifiable {
 
     var multisigDescriptor: String = ""
     @Published var xpub = ""
-    @Published var xprv = "" // might need to be published
+    @Published var xprv = ""
     var blockchain: Blockchain?
 
     private(set) var wallet: Wallet? = nil
@@ -69,8 +68,6 @@ class WalletManager: ObservableObject,Identifiable {
         
         walletDTO.threshold = threshold
         walletDTO.networkStr = networkStr
-        
-//        print(walletDTO)
     }
     
     func setNetwork(network: Network) {
@@ -89,10 +86,7 @@ class WalletManager: ObservableObject,Identifiable {
     }
 
     public func buildMultiSigDescriptor() {
-//        print("XPRV")
-//        print(xprv)
         self.multisigDescriptor = "wsh(sortedmulti(\(threshold),\(xprv)/84'/1'/0'/0/*,\(xpubs.joined(separator: ","))))"
-//        print(self.multisigDescriptor)
         do {
             try storeWalletDTO()
         } catch {
@@ -119,9 +113,7 @@ class WalletManager: ObservableObject,Identifiable {
             let script = address.scriptPubkey()
             var txBuilder = TxBuilder().addRecipient(script: script, amount: amount)
             txBuilder = txBuilder.enableRbf()
-            print(Float(txFee))
             txBuilder = txBuilder.feeRate(satPerVbyte: Float(txFee))
-            print(txBuilder.self)
             let details = try txBuilder.finish(wallet: wallet!)
             let _ = try wallet!.sign(psbt: details.psbt, signOptions: nil)
 
@@ -168,7 +160,6 @@ class WalletManager: ObservableObject,Identifiable {
             try self.storeWalletDTO()
             try computeXpub()
 
-            print(self.xpub)
             if xpubs != [""] {
                 self.buildMultiSigDescriptor()
                 try self.load()
@@ -218,19 +209,18 @@ class WalletManager: ObservableObject,Identifiable {
                 let wallet_transactions: [TransactionDetails] = try self.wallet!.listTransactions(includeRaw: false)
 
                 let formatter = NumberFormatter()
-                formatter.numberStyle = .decimal // this is what adds the thousands separators
+                formatter.numberStyle = .decimal
 
                 DispatchQueue.main.async {
                     self.balance = balance
                     if let formattedString = formatter.string(from: NSNumber(value: self.balance)) {
                         print(formattedString)
-                        self.balanceText = formattedString // Prints "1,234,567,890" in U.S. locale
+                        self.balanceText = formattedString
                     } else {
                         self.balanceText = "error"
                     }
 
                     self.transactions = wallet_transactions.sorted().reversed()
-                    print(self.transactions.first ?? "")
                     self.computeLastTransaction()
                     self.newAddress()
                 }
@@ -254,8 +244,6 @@ class WalletManager: ObservableObject,Identifiable {
     }
 
     func storeXprvKey(xprvKeyData: String) throws {
-        // todo: introduce proper key management to store and get several keys
-        //  might also want to store descriptor for easier handling of completely different wallets
         let status = saveToKeyChain(key: "com.snblago.SatoshiGuard.\(id)", data: xprvKeyData.data(using: .utf8)!)
         guard status == errSecSuccess else {
             throw MyError.storingFailed
@@ -263,7 +251,6 @@ class WalletManager: ObservableObject,Identifiable {
     }
 
     func loadXprvKey() throws {
-        // todo: introduce proper key management to store and get several keys
         let result = loadFromKeyChain(key: "com.snblago.SatoshiGuard.\(id)")
         if result == nil {
             return
@@ -289,8 +276,6 @@ class WalletManager: ObservableObject,Identifiable {
 
         let encoder = JSONEncoder()
         if let jsonData = try? encoder.encode(walletDTO) {
-//            print(walletDTO)
-//            print(jsonData)
             UserDefaults.standard.set(jsonData, forKey: "\(id)")
             print("stored data to user defaults")
         } else {
@@ -304,9 +289,6 @@ class WalletManager: ObservableObject,Identifiable {
             if data == nil {
                 return nil
             }
-            // Convert Data back to an array of MyType
-            //                let decoder = JSONDecoder()
-//                let loadedWalletDTO = try decoder.decode(WalletDTO.self, from: data)
             return try loadWalletFromWalletDTO(walletDTO: data!)
         } catch {
             print("Error decoding Data to array: \(error)")
@@ -351,7 +333,6 @@ class WalletManager: ObservableObject,Identifiable {
         do {
             try walletManager.loadXprvKey()
             walletManager.buildMultiSigDescriptor()
-    //        print(walletManager.multisigDescriptor)
 
             try walletManager.load()
             walletManager.sync(background: true)
@@ -377,12 +358,10 @@ class WalletManager: ObservableObject,Identifiable {
 
 class WalletCoordinator: ObservableObject {
     @AppStorage("walletids") var walletIdsData: Data?
-//    var walletIdsStr: [String]
     @Published var wallets: [WalletManager] = []
 
     lazy var walletIdsStr: [String] = {
         do {
-//            print(walletIdsData)
             if let walletData = walletIdsData {
                 return try JSONDecoder().decode([String].self, from: walletData)
             }
@@ -403,7 +382,6 @@ class WalletCoordinator: ObservableObject {
 
 
     func loadWallets() throws {
-//        print(walletIdsStr)
         for walletId in walletIdsStr {
             do {
                 let wallet = try WalletManager.loadWalletById(id: walletId)
@@ -428,12 +406,11 @@ class WalletCoordinator: ObservableObject {
         
         wallets.append(newWallet)
         objectWillChange.send()
-        print("New wallet created and added with id: \(newWallet.id.uuidString)") // Debug print
+        print("New wallet created and added with id: \(newWallet.id.uuidString)")
         let data = try JSONEncoder().encode(walletIdsStr)
         walletIdsData = data
         return newWallet
     }
-    
     
     func appendIfNotContains(value: String) {
         if !walletIdsStr.contains(value) {
@@ -447,7 +424,4 @@ class WalletCoordinator: ObservableObject {
         }
         
     }
-
 }
-
-

@@ -46,6 +46,9 @@ struct DynamicTextFieldView: View {
                 activeAlert = .error
                 showAlert = true
             }
+//            todo use this instead to allow bigger multisig wallets
+//            localXpubs.append(result.string)
+
         }
         self.isShowingScanner = false
         
@@ -54,12 +57,12 @@ struct DynamicTextFieldView: View {
         
         VStack(alignment: .center) {
             ScrollView{
-//                Spacer()
                 VStack{
                     ForEach(Array(localXpubs.indices), id: \.self) { index in
                         HStack {
                             TextField("Xpub \(index + 1)", text: $localXpubs[index])
                             Spacer()
+                            // todo remove "if index < maxXpubs - 1" to allow bigger multisig wallets
                             if index < maxXpubs - 1 {
                                 Button(action: {
                                     if index == localXpubs.count - 1 {

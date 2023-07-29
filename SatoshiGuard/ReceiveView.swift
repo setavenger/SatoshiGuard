@@ -65,7 +65,6 @@ struct ReceiveView: View {
         }
 //        .background(LinearGradient(gradient: Gradient(colors: [Color.black, Color.gray]), startPoint: .top, endPoint: .bottom))
         .navigationTitle("Receive Address")
-//        .onAppear(perform: getAddress)
     }
 }
 
@@ -84,7 +83,6 @@ struct BasicButton: View {
                 .padding(10)
                 .background(colorBg)
                 .cornerRadius(10.0)
-//                .shadow(color: Color("Shadow"), radius: 1, x: 5, y: 5)
         }
     }
 }

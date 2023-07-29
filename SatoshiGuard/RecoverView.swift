@@ -70,7 +70,6 @@ struct RecoverView: View {
                                 print("\(error)")
                                 activeAlert = .error
                                 showAlert = true
-
 //                                errorMessage = error.localizedDescription
                             }
                         }) {
