@@ -69,22 +69,7 @@ struct HomeView: View {
             
             GeometryReader { geometry in
                 HStack(spacing: 10) {
-                    Button(action: {
-                        do {
-                            try walletManager.loadXprvKey()
-                            try walletManager.load()
-                            walletManager.sync(background: false)
-                        } catch {
-                            print("\(error)")
-                        }
-                    }) {
-                        Text("Sync Wallet")
-                            .frame(width: geometry.size.width/2 - 15, height: 50)
-                            .font(.headline)
-                            .foregroundColor(.orange)
-                            .background(Color("Shadow"))
-                            .cornerRadius(10)
-                    }
+                    Spacer()
                     NavigationLink(destination: TxsView(walletManager: walletManager)) {
                         Text("Transactions")
                             .frame(width: geometry.size.width/2 - 15, height: 50)
@@ -93,6 +78,7 @@ struct HomeView: View {
                             .background(Color.orange)
                             .cornerRadius(10)
                     }
+                    Spacer()
                 }.padding(.horizontal, 10)
             }
             .frame(height: 50)

@@ -48,6 +48,14 @@ struct RecoverView: View {
                     .disableAutocorrection(true)
                     .background(Color.clear)
             }
+            Button(action: {
+                let pasteboard = UIPasteboard.general
+                inputText = pasteboard.string ?? ""
+            }) {
+                Text("Paste Mnemonic Phrase")
+                    .font(.headline)
+                    .padding()
+            }
             GeometryReader { geometry in
                 VStack{
                     HStack(spacing: 10) {
@@ -100,6 +108,10 @@ struct RecoverView: View {
             }
         }
         .background(LinearGradient(gradient: Gradient(colors: [Color.black, Color.gray]), startPoint: .top, endPoint: .bottom))
+        .ignoresSafeArea(.keyboard, edges: .bottom)
+        .onTapGesture {
+            self.endTextEditing()
+        }
     }
 }
 

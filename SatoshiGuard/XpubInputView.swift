@@ -10,8 +10,6 @@ import SwiftUI
 import CodeScanner
 import AVFoundation
 
-let maxXpubs = 2
-
 struct DynamicTextFieldView: View {
     @ObservedObject var walletManager: WalletManager
 
@@ -127,6 +125,7 @@ struct DynamicTextFieldView: View {
         }.onTapGesture {
             self.endTextEditing()
         }
+        .ignoresSafeArea(.keyboard, edges: .bottom)
     }
 }
 
@@ -142,4 +141,3 @@ func verifyValidXpubs(xpubs: [String]) -> String {
     }
     return ""
 }
-

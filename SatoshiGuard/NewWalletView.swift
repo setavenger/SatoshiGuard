@@ -36,9 +36,12 @@ struct NewWalletView: View {
                 
                 Button(action: {
                     do {
-                        _ = try walletCoordinator.createNewWallet(name: newWalletName, network: network)
-                        showSuccessAlert = true
-//                        print(walletCoordinator.wallets.count)
+                        if newWalletName != "" {
+                            _ = try walletCoordinator.createNewWallet(name: newWalletName, network: network)
+                            showSuccessAlert = true
+                        } else {
+                            // todo add error for this. wallet needs a name
+                        }
                     } catch {
 //                         todo show alert
                         print("\(error)")

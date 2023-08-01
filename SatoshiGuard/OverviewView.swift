@@ -59,9 +59,18 @@ struct WalletView: View {
     var body: some View {
         NavigationLink(destination: HomeView(wallet: wallet)) {
             VStack(alignment: .leading) {
-                Text(wallet.name)
-                    .font(.headline)
-                    .padding(.bottom, 2)
+                HStack{
+                    Text(wallet.name)
+                        .font(.headline)
+                    Spacer()
+                    if wallet.unsignedPSBT != nil {
+                        Text("!")
+                            .font(.headline)
+                            .foregroundColor(Color("Shadow"))
+                            .padding(10)
+                            .background(Circle().fill(Color.red))
+                    }
+                }.padding(.bottom, 2)
                 Text("\(wallet.balanceText) Sats")
                     .font(.headline)
                     .padding(.bottom, 2)

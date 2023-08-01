@@ -48,24 +48,45 @@ struct SendView: View {
                         TextField("Amount", text: $amount)
                             .modifier(BasicTextFieldStyle())
                             .keyboardType(.numberPad)
-//                            .keyboardType(.decimalPad)
                     }
                     Section(header: Text("Fees (sat/vB)").textStyle(BasicTextStyle(white: true))) {
                         TextField("Transaction Fee", text: $txFeeString)
                             .modifier(BasicTextFieldStyle())
                             .keyboardType(.numberPad)
-//                            .keyboardType(.decimalPad)
                     }
                 }
                 .onAppear {
                     UITableView.appearance().backgroundColor = .clear
                 }
-               
+                Button(action: {
+                    let pasteboard = UIPasteboard.general
+                    to = pasteboard.string ?? ""
+                    print(pasteboard.string ?? "no value")
+                }) {
+                    Text("Paste Address")
+                }
+                Spacer()
                 if psbtSigned != "" {
                     Button(action: {
-                        isShowingQRCode = true
+                        if let fileUrl = prepareJSONData(signature: walletManager.walletSignature, psbt: psbtSigned) {
+                            guard let rootVC = UIApplication.shared.connectedScenes
+                                    .filter({$0.activationState == .foregroundActive})
+                                    .map({$0 as? UIWindowScene})
+                                    .compactMap({$0})
+                                    .first?.windows
+                                    .filter({$0.isKeyWindow}).first?.rootViewController else {
+                                print("Cannot find root view controller.")
+                                return
+                            }
+                            
+                            let activityViewController = UIActivityViewController(activityItems: [fileUrl], applicationActivities: nil)
+                            rootVC.present(activityViewController, animated: true, completion: nil)
+
+                        } else {
+                            print("Error preparing data for sharing.")
+                        }
                     }) {
-                        Text("Show QR Code")
+                        Text("Share PSBT")
                             .font(.headline)
                             .foregroundColor(.orange)
                             .padding()
@@ -80,8 +101,7 @@ struct SendView: View {
                             .padding()
                     }
                 }
-                Spacer()
-                BasicButton(action: { self.isShowingScanner = true}, text: "Scan Address", colorBg: .orange, fontCol: Color("Shadow"))
+//                BasicButton(action: { self.isShowingScanner = true}, text: "Scan Address", colorBg: .orange, fontCol: Color("Shadow"))
                 BasicButton(action: {
                     do {
                         let psbt = try walletManager.createTransaction(recipient: to, amount: UInt64(amount)!, txFee: Double(txFeeString)!)
@@ -99,22 +119,45 @@ struct SendView: View {
         .alert(isPresented: $showAlert) {
             switch activeAlert {
             case .success:
-                return Alert(title: Text("Success"),message: Text("Success"),dismissButton: .default(Text("OK")))
+                return Alert(title: Text("Success"), message: Text("Success"), dismissButton: .default(Text("OK")))
             case .error:
-                return Alert(title: Text("Error"),message: Text(errorMessage),dismissButton: .default(Text("OK")))
+                return Alert(title: Text("Error"), message: Text(errorMessage), dismissButton: .default(Text("OK")))
             }
         }
         .navigationTitle("Send")
-        .sheet(isPresented: $isShowingScanner) {
-            CodeScannerView(codeTypes: [.qr], simulatedData: "Testing1234", videoCaptureDevice: AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back),completion: self.handleScan)
-        }
+//        .sheet(isPresented: $isShowingScanner) {
+//            CodeScannerView(codeTypes: [.qr], simulatedData: "Testing1234", videoCaptureDevice: AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back),completion: self.handleScan)
+//        }
         .sheet(isPresented: $isShowingQRCode) {
             PSBTQRView(psbt: psbtSigned)
         }
         .onTapGesture {
             self.endTextEditing()
         }
-                
+        .ignoresSafeArea(.keyboard, edges: .bottom)
     }
 }
 
+
+func prepareJSONData(signature: String, psbt: String) -> URL? {
+    let transfer: TransferPSBT = TransferPSBT(signature: signature, psbt: psbt)
+
+    do {
+        let encoder = JSONEncoder()
+        let data = try encoder.encode(transfer)
+        let tempDirectoryURL = URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
+        let targetURL = tempDirectoryURL.appendingPathComponent("Signed PSBT Transfer").appendingPathExtension("sgpsbt")
+        try data.write(to: targetURL)
+        
+        return targetURL
+    } catch {
+        print("Error converting JSON to Data: \(error)")
+        return nil
+    }
+}
+
+//extension UIViewController: UIDocumentInteractionControllerDelegate {
+//    public func documentInteractionControllerViewControllerForPreview(_ controller: UIDocumentInteractionController) -> UIViewController {
+//        return self
+//    }
+//}

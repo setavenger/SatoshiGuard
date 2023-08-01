@@ -38,3 +38,14 @@ extension TransactionDetails: Equatable {
         return lhs_timestamp == rhs_timestamp
     }
 }
+
+extension UnsignedPSBT: Equatable {
+    public static func == (lhs: UnsignedPSBT, rhs: UnsignedPSBT) -> Bool {
+        return lhs.psbt == rhs.psbt
+    }
+}
+
+struct TransferPSBT: Codable {
+    var signature: String = ""
+    var psbt: String = ""
+}

@@ -75,21 +75,38 @@ struct SignView: View {
 //                            .foregroundColor(.orange)
                             .padding()
                     }
+                    Spacer()
                     if psbtSigned != "" {
+                        Button(action: {
+                            if let fileUrl = prepareJSONData(signature: walletManager.walletSignature, psbt: psbtSigned) {
+                                guard let rootVC = UIApplication.shared.connectedScenes
+                                        .filter({$0.activationState == .foregroundActive})
+                                        .map({$0 as? UIWindowScene})
+                                        .compactMap({$0})
+                                        .first?.windows
+                                        .filter({$0.isKeyWindow}).first?.rootViewController else {
+                                    print("Cannot find root view controller.")
+                                    return
+                                }
+                                
+                                let activityViewController = UIActivityViewController(activityItems: [fileUrl], applicationActivities: nil)
+                                rootVC.present(activityViewController, animated: true, completion: nil)
+
+                            } else {
+                                print("Error preparing data for sharing.")
+                            }
+                        }) {
+                            Text("Share PSBT")
+                                .font(.headline)
+                                .foregroundColor(.orange)
+                                .padding()
+                        }
                         Button(action: {
                             let pasteboard = UIPasteboard.general
                             pasteboard.string = psbtSigned
                         }) {
                             Text("Copy Signed PSBT to Clipboard")
                                 .font(.headline)
-                                .padding()
-                        }
-                        Button(action: {
-                            isShowingQRCode = true
-                        }) {
-                            Text("Show PSBT QR")
-                                .font(.headline)
-                                .foregroundColor(.orange)
                                 .padding()
                         }
                     }
@@ -104,10 +121,14 @@ struct SignView: View {
                         }
                     }
                 }
-                Spacer()
                 VStack {
                     HStack{
-                        BasicButton(action: {isShowingScanner = true}, text: "Scan QR Code", colorBg: .blue, fontCol: Color("Shadow"))
+                        BasicButton(action: {
+                            if let optionalPSBT = walletManager.unsignedPSBT {
+                                psbtString = optionalPSBT.psbt
+                            }
+
+                        }, text: "Shared PSBTs", colorBg: .blue, fontCol: Color("Shadow"))
                             .frame(width: geometry.size.width/2 - 25 )
                         BasicButton(action: {
                             do {
@@ -116,6 +137,12 @@ struct SignView: View {
     //                            self.successMessage = "PSBT was signed successfully"
     //                            self.activeAlert = .success
     //                            self.showAlert = true
+                                if let optionalPSBT = walletManager.unsignedPSBT {
+                                    if psbtString == optionalPSBT.psbt {
+                                        walletManager.unsignedPSBT = nil
+                                        try walletManager.storeWalletDTO()
+                                    }
+                                }
                             } catch {
                                 errorMessage = "\(error)"
                                 print("\(error)")
@@ -130,6 +157,12 @@ struct SignView: View {
                         do {
                             let psbt = try walletManager.SignPSBT(psbtString: psbtString)
                             successTXID = try walletManager.Broadcast(psbt: psbt)
+                            if let optionalPSBT = walletManager.unsignedPSBT {
+                                if psbtString == optionalPSBT.psbt {
+                                    walletManager.unsignedPSBT = nil
+                                    try walletManager.storeWalletDTO()
+                                }
+                            }
                             self.successMessage = "Successfully broadcasted transaction"
                             self.activeAlert = .success
                             self.showAlert = true
@@ -165,6 +198,7 @@ struct SignView: View {
         .sheet(isPresented: $isShowingQRCode) {
             PSBTQRView(psbt: psbtSigned)
         }
+        .ignoresSafeArea(.keyboard, edges: .bottom)
     }
 }
 

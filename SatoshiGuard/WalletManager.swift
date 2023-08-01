@@ -21,6 +21,14 @@ struct WalletDTO: Codable {
     
     var threshold: UInt8 = 1
     var networkStr: String = "testnet"
+    var unsignedPSBT: UnsignedPSBT?
+    var walletSignature: String?
+}
+
+struct UnsignedPSBT: Codable {
+    var psbt: String
+    var shared_at: UInt
+    var signed: Bool
 }
 
 class WalletManager: ObservableObject,Identifiable {
@@ -32,6 +40,9 @@ class WalletManager: ObservableObject,Identifiable {
     @Published var xpub1: String = ""
     @Published var xpub2: String = ""
     @Published var xpubs: [String] = [""]
+    @Published var unsignedPSBT: UnsignedPSBT?
+    @Published var walletSignature: String = ""
+    
     
     @Published var threshold: UInt8 = 1
     var networkStr: String = "testnet"
@@ -68,6 +79,8 @@ class WalletManager: ObservableObject,Identifiable {
         
         walletDTO.threshold = threshold
         walletDTO.networkStr = networkStr
+        walletDTO.unsignedPSBT = unsignedPSBT
+        walletDTO.walletSignature = walletSignature
     }
     
     func setNetwork(network: Network) {
@@ -87,6 +100,10 @@ class WalletManager: ObservableObject,Identifiable {
 
     public func buildMultiSigDescriptor() {
         self.multisigDescriptor = "wsh(sortedmulti(\(threshold),\(xprv)/84'/1'/0'/0/*,\(xpubs.joined(separator: ","))))"
+        var sigXpubs = xpubs
+        sigXpubs.append(xpub)
+        self.walletSignature = "wsh(sortedmulti(\(threshold),\(sigXpubs.sorted().joined(separator: ","))))"
+        
         do {
             try storeWalletDTO()
         } catch {
@@ -103,7 +120,7 @@ class WalletManager: ObservableObject,Identifiable {
             print("\(error)")
             throw error
         }
-
+        
         return psbt
     }
 
@@ -240,7 +257,6 @@ class WalletManager: ObservableObject,Identifiable {
         } catch {
             self.nextReceiveAddress = "ERROR"
         }
-
     }
 
     func storeXprvKey(xprvKeyData: String) throws {
@@ -294,7 +310,6 @@ class WalletManager: ObservableObject,Identifiable {
             print("Error decoding Data to array: \(error)")
             throw MyError.genericError
         }
-        
     }
 
     public static func loadWalletFromWalletDTO(walletDTO: Data) throws -> WalletManager {
@@ -315,7 +330,13 @@ class WalletManager: ObservableObject,Identifiable {
             walletManager.xpubs = walletDataDTO.xpubs
         }
         
-        print(walletManager.xpubs)
+        if let unsignedPSBT = walletDataDTO.unsignedPSBT {
+            walletManager.unsignedPSBT = unsignedPSBT
+        }
+        if let walletSignature = walletDataDTO.walletSignature {
+            walletManager.walletSignature = walletSignature
+        }
+        
         
         switch walletDataDTO.networkStr {
         case "bitcoin":
@@ -380,7 +401,6 @@ class WalletCoordinator: ObservableObject {
         }
     }
 
-
     func loadWallets() throws {
         for walletId in walletIdsStr {
             do {
@@ -394,7 +414,6 @@ class WalletCoordinator: ObservableObject {
                 print("\(error)")
                 continue
             }
-            
         }
     }
 
@@ -422,6 +441,5 @@ class WalletCoordinator: ObservableObject {
         } catch {
             print("\(error)")
         }
-        
     }
 }
