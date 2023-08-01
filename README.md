@@ -79,7 +79,6 @@ e.g. [bdk-cli](https://github.com/bitcoindevkit/bdk-cli)).
 - [x] Fix thread blocking syncs when switching to receive view to fast after opening home view
 - [ ] Improve error handling
 - [ ] Write tests
-- [-] Allow QR-Code sharing of PSBTs (removed in favor of airdrop)
 - [x] Improve sharing of PSBTs (added airdrop)
 - [ ] Add support for combination of individually signed PSBTs
 
