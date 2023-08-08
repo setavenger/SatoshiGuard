@@ -81,6 +81,7 @@ e.g. [bdk-cli](https://github.com/bitcoindevkit/bdk-cli)).
 - [ ] Write tests
 - [x] Improve sharing of PSBTs (added airdrop)
 - [ ] Add support for combination of individually signed PSBTs
+- [ ] Add support for watch-only wallets
 
 ## Caveats
 

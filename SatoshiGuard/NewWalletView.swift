@@ -14,7 +14,8 @@ struct NewWalletView: View {
     @State var newWalletName: String = ""
     @State var network: Network = Network.testnet
     @State private var showSuccessAlert = false
-    
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+
     init(walletCoordinator: WalletCoordinator) {
         self.walletCoordinator = walletCoordinator
     }
@@ -61,7 +62,9 @@ struct NewWalletView: View {
             .alert(isPresented: $showSuccessAlert) {
                 Alert(title: Text("Success"),
                       message: Text("Successfully added wallet"),
-                      dismissButton: .default(Text("OK")))
+                      dismissButton: .default(Text("OK")) {
+                    presentationMode.wrappedValue.dismiss()
+                })
             }
         }
         .background(LinearGradient(gradient: Gradient(colors: [Color.black, Color.gray]), startPoint: .top, endPoint: .bottom))

@@ -113,6 +113,13 @@ struct HomeView: View {
                                 .foregroundColor(.black)
                                 .background(Color.orange)
                                 .cornerRadius(10)
+//                            if walletManager.unsignedPSBT == nil {
+//                                Text("!")
+//                                    .font(.headline)
+//                                    .foregroundColor(Color("Shadow"))
+//                                    .padding(10)
+//                                    .background(Circle().fill(Color.red))
+//                            }
                         }
                     }
                 }

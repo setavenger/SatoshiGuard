@@ -70,9 +70,8 @@ struct SignView: View {
                         let pasteboard = UIPasteboard.general
                         psbtString = pasteboard.string ?? ""
                     }) {
-                        Text("Paste PSBT")
+                        Text("Paste from Clipboard")
                             .font(.headline)
-//                            .foregroundColor(.orange)
                             .padding()
                     }
                     Spacer()
@@ -128,7 +127,7 @@ struct SignView: View {
                                 psbtString = optionalPSBT.psbt
                             }
 
-                        }, text: "Shared PSBTs", colorBg: .blue, fontCol: Color("Shadow"))
+                        }, text: "Received PSBT", colorBg: .blue, fontCol: Color("Shadow"))
                             .frame(width: geometry.size.width/2 - 25 )
                         BasicButton(action: {
                             do {

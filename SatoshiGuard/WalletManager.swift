@@ -220,7 +220,7 @@ class WalletManager: ObservableObject,Identifiable {
         DispatchQueue.global().async {
             print("syncing started")
             do {
-                // TODO find out why this blocks receive view while syncing
+                // TODO find a workaround to this. It blocks all access to wallet
                 try self.wallet!.sync(blockchain: self.blockchain!, progress: nil)
                 let balance = try self.wallet!.getBalance().confirmed
                 let wallet_transactions: [TransactionDetails] = try self.wallet!.listTransactions(includeRaw: false)
@@ -314,7 +314,6 @@ class WalletManager: ObservableObject,Identifiable {
 
     public static func loadWalletFromWalletDTO(walletDTO: Data) throws -> WalletManager {
         let decoder = JSONDecoder()
-        print(walletDTO)
         let walletDataDTO = try decoder.decode(WalletDTO.self, from: walletDTO)
         let walletManager = WalletManager()
         walletManager.id = UUID(uuidString: walletDataDTO.id)!

@@ -18,7 +18,8 @@ struct RecoverView: View {
     @State private var activeAlert: ActiveAlert = .success
 
     @State private var errorMessage = ""
-    
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+
     init(walletManager: WalletManager) {
         self.walletManager = walletManager
     }
@@ -102,7 +103,9 @@ struct RecoverView: View {
         .alert(isPresented: $showAlert) {
             switch activeAlert {
             case .success:
-                return Alert(title: Text("Success"), message: Text("Successfully set new Private Key"), dismissButton: .default(Text("OK")))
+                return Alert(title: Text("Success"), message: Text("Successfully set new Private Key"), dismissButton: .default(Text("OK")){
+                    presentationMode.wrappedValue.dismiss()
+                })
             case .error:
                 return Alert(title: Text("Error"), message: Text("Make sure you enter a valid Key of 12 or 24 words"), dismissButton: .default(Text("OK")))
             }
