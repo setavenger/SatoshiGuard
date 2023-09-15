@@ -16,9 +16,6 @@ scratch. The app supports both testnet and the Bitcoin mainnet.
 The app is currently available for download in testflight [here](https://testflight.apple.com/join/dq0ciBGx). I'm happy about any
 feedback and improvement ideas.
 
-### Bug Bounty Program
-In order to make this app as secure and smooth to use as possible, I have decided to create a bug bounty program. The base reward is 5,000 Sats for small bugs. Bigger bugs can receive up to 21,000 Sats. The classification of the bug and the final amount are left to my discretion. A found bug has to be reported as a Github issue and has to be new, so no prior issue to this bug should exist. Furthermore the bug has to be in the latest available build of the app.
-
 ## Getting Started
 
 ### Setup
